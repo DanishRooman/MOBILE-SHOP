@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MOBILESHOP.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         public object CustomerDTO { get; private set; }
@@ -14,7 +15,7 @@ namespace MOBILESHOP.Controllers
         // GET: Customer
         public ActionResult Index()
         {
-            CustomerDTO  dto = new CustomerDTO();
+          
             return View();
         }
         public ActionResult AddCustomer()
