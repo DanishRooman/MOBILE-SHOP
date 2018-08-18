@@ -12,9 +12,13 @@ namespace DataAccessLayer.DBContext
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_user
+    public partial class AspNetUserClaims
     {
-        public int user_id { get; set; }
-        public string user_name { get; set; }
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
+    
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }
