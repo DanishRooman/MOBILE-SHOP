@@ -9,7 +9,7 @@ namespace DataTransferObject.Customer
 {
    public class CustomerDTO
     {
-        [Required]
+       
         [Display(Name = "id")]
         public int id { get; set; }
 

@@ -23,9 +23,18 @@ namespace MOBILESHOP
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/Script/unobstrasive").Include(
+              "~/Scripts/jquery.unobtrusive-ajax.js",
+              "~/Scripts/jquery.validate.min.js"
+
+             ));
+
+            bundles.Add(new ScriptBundle("~/Script/unobtrusive-script").Include(
+                "~/Scripts/jquery.validate.unobtrusive.min.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/script").Include(
-                      "~/assets/script.js"));
+                       "~/assets/script.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/owl.carousel").Include(
                       "~/assets/owl-carousel/owl.carousel.js"));
@@ -35,11 +44,19 @@ namespace MOBILESHOP
                       "~/assets/slitslider/js/jquery.ba-cond.min.js",
                       "~/assets/slitslider/js/jquery.slitslider.js"));
 
-
+            bundles.Add(new ScriptBundle("~/bundles/Toast-and-Confirm").Include(
+                     "~/assets/owl-carousel/owl.carousel.js",
+                         "~/Scripts/jquery.toast.min.js",
+                        "~/Scripts/jquery-confirm.js"
+                         ));
             //----------------------- CSS ------------------------//
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/jquery-confirm.css",
+                  "~/Content/jquery.toast.min.css",
+                     "~/fonts/font-awesome.css",
+                       "~/fonts/font-awesome.min.css",
                       "~/Content/bootstrap.css",
                       "~/assets/style.css"
                       /*"~/Content/site.css"*/));
@@ -52,6 +69,10 @@ namespace MOBILESHOP
                      "~/assets/slitslider/css/style.css",
                      "~/assets/slitslider/css/custom.css"
                      ));
+            bundles.Add(new StyleBundle("~/Contents/Datatable-style").Include(
+               "~/Content/dataTables.bootstrap.min.css",
+               "~/Content/responsive.bootstrap.min.css"
+               ));
 
         }
     }
