@@ -1,27 +1,32 @@
-﻿@model IEnumerable<MOBILESHOP.Controllers.CustomerDTO>
-
+﻿
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-md-12">
+        
+        @Html.ActionLink("Add Customer", "AddCustomer", "Customer", null, new { @class = "btn btn-primary" })
+        <br /><br />
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> Customer Details
+                <div class="pull-right">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th></th>
-    </tr>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div id="divCustomer">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+  <script src="~/ProjectScript/Customer/Customer.js"></script>
+                
+  }
 
-</table>

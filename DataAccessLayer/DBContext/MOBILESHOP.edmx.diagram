@@ -5,7 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="bfea58cb1ccc41be974b27891ed795b3" Name="Diagram1">
-        <EntityTypeShape EntityType="MOBILESHOPModel.tbl_user" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.5" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="3.625" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.AspNetUsers" Width="1.5" PointX="3" PointY="1.375" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.mbshop_customer_details" Width="1.5" PointX="2.75" PointY="6.75" />
+        <AssociationConnector Association="MOBILESHOPModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="MOBILESHOPModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="MOBILESHOPModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

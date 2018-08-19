@@ -1,4 +1,5 @@
-﻿using DataTransferObject.Customer;
+﻿using DataAccessLayer.DBContext;
+using DataTransferObject.Customer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,23 +8,110 @@ using System.Web.Mvc;
 
 namespace MOBILESHOP.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
-        public object CustomerDTO { get; private set; }
-
         // GET: Customer
         public ActionResult Index()
         {
-            CustomerDTO  dto = new CustomerDTO();
+
             return View();
         }
+        [HttpGet]
         public ActionResult AddCustomer()
         {
             CustomerDTO dt = new CustomerDTO();
+            return View("AddCustomer", dt);
+        }
+        [HttpPost]
+        public ActionResult AddCustomer(CustomerDTO dto)
+        {
+            try
+            {
+                using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                {
+                    mbshop_customer_details mbshop = new mbshop_customer_details()
+                    {
 
-            return View();
+                        customer_name = dto.Name,
+                        customer_address = dto.Address,
+                        customer_email = dto.Email,
+                        customer_mobile_number = dto.Mobile
+                    };
+                    dbcontext.mbshop_customer_details.Add(mbshop);
+                    dbcontext.SaveChanges();
+                    return Json(new { key = true, value = "Customer added successfully" }, JsonRequestBehavior.AllowGet);
+
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { key = false, value = "Unable to save the Customer" }, JsonRequestBehavior.AllowGet); ;
+            }
+        }
+        [HttpGet]
+        public ActionResult CustomerListing()
+        {
+            try
+            {
+                List<CustomerDTO> CstmrList = new List<CustomerDTO>();
+                using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                {
+                    CstmrList = dbcontext.mbshop_customer_details.AsEnumerable().OrderByDescending(x => x.customer_id).Select(x => new CustomerDTO
+                    {
+                        id = x.customer_id,
+                        Name = x.customer_name,
+                        Address = x.customer_address,
+                        Email = x.customer_email,
+                        Mobile = x.customer_mobile_number
+
+                    }).ToList();
+
+                };
+
+                return PartialView("_CustomerListing", CstmrList);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
+        }
+        public ActionResult DeleteCustomer(int id)
+        {
+            try
+            {
+                using (MOBILESHOPEntities dbcontext=new MOBILESHOPEntities())
+                {
+                    var cstmr = dbcontext.mbshop_customer_details.Find(id);
+                    if (cstmr !=null)
+                    {
+                        dbcontext.mbshop_customer_details.Remove(cstmr);
+                        dbcontext.SaveChanges();
+                        return Json(new { key = true, value = "Customer deleted successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { key = false, value = "Customer not Found its Deleted from data base!!" }, JsonRequestBehavior.AllowGet);
+                    }
+                };
+
+            }
+            catch (Exception)
+            {
+
+                return Json(new { key = false, value = "Unable to the Customer" }, JsonRequestBehavior.AllowGet);
+            }
+           
         }
     }
 
-  
+
+
+
+
+
 }

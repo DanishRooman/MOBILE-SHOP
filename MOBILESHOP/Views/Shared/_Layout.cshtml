@@ -8,6 +8,8 @@
     @Styles.Render("~/Content/owl-carousel-css")
     @Styles.Render("~/Content/slitslider-css")
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Contents/Datatable-style")
+   
 
 </head>
 <body>
@@ -29,6 +31,10 @@
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Customer Detail", "Index", "Customer")</li>
+                        <li>@Html.ActionLink("Add Customer", "AddCustomer", "Customer")<li>
+
+
                     </ul>
                     @Html.Partial("_LoginPartial")
                 </div>
@@ -61,10 +67,14 @@
             ( الحقوق محفوظة لـ(  <a href="http://bariq-tech.com">بريق التكنولوجيا</a> )
         </div>
 
-
-
+       
     </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jqury-DataTable.js"></script>
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/Toast-and-Confirm")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/script")
     @Scripts.Render("~/bundles/owl.carousel")

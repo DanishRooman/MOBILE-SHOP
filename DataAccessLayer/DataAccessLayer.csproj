@@ -51,6 +51,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBContext\AspNetRoles.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\AspNetUserClaims.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\AspNetUserLogins.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\AspNetUsers.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\C__MigrationHistory.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\mbshop_customer_details.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\MOBILESHOP.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -65,9 +83,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MOBILESHOP.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\tbl_user.cs">
-      <DependentUpon>MOBILESHOP.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
