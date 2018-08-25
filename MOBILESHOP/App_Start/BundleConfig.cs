@@ -56,7 +56,6 @@ namespace MOBILESHOP
                 "~/Content/jquery-confirm.css",
                   "~/Content/jquery.toast.min.css",
                      "~/fonts/font-awesome.css",
-                       "~/fonts/font-awesome.min.css",
                       "~/Content/bootstrap.css",
                       "~/assets/style.css"
                       /*"~/Content/site.css"*/));
