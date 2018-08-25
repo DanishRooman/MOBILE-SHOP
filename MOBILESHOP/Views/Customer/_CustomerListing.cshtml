@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataTransferObject.Customer.CustomerDTO>
+﻿ @model IEnumerable<DataTransferObject.Customer.CustomerDTO>
 
 
 <table class="table table-bordered table-hover table-striped" id="customer">
@@ -38,11 +38,10 @@
                     @Html.DisplayFor(modelItem => item.Mobile)
                 </td>
                 <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
-                    <a href="javascript:void(0);" title="Edit Customer" onclick=""><i class="fa fa-pencil" aria-hidden="true"></i></a> |
-                    <a href="javascript:void(0);" title="Delete Customer" onclick="Customer.initDeleteCustomer(@item.id);"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                   @Html.ActionLink("Edit", "EditCostumer", new { id = item.id }) |
+                  
+                    
+                    <a href="javascript:void(0);" title="Delete Customer" onclick="Customer.initDeleteCustomer(@item.id);">Delete</a>
                 </td>
             </tr>
         }

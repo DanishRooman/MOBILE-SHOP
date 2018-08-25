@@ -1,26 +1,13 @@
 ﻿var Customer = function () {
 
-    //private Static
-    //var handleCreateCustomer = function () {
 
-    //    //Ajax Call
-    //    $.ajax({
-    //        url: '/Customer/AddCustomer',
-    //        type: 'GET',
-    //        dataType: 'HTML',
-    //        data: {},
-    //        success: function (result) {
-    //            $("#CreateCategories").empty();
-    //            $("#CreateCategories").html(result);
-    //            $("#CreateCategories").modal("show");
-    //        },
-    //        error: function () {
-    //            console.log("Error");
-    //        }
-    //    });
-    //};
+    var handleEmptyCustomer = function () {
+        $('.form-control').val("");
+
+    };
 
     var handleSuccessCustomer = function (result) {
+        debugger
         if (result.key) {
 
             $.toast({
@@ -29,6 +16,7 @@
                 showHideTransition: 'slide',
                 icon: 'success'
             });
+            handleEmptyCustomer();
         }
         else {
             $.toast({
@@ -57,7 +45,7 @@
 
     };
     handleDeleteCustomer = function (id) {
-        debugger
+
         $.confirm({
             title: 'Delete Group',
             content: 'Are you sure you want to delete this Category?',
@@ -118,11 +106,9 @@
         initDeleteCustomer: function (id) {
             handleDeleteCustomer(id);
         },
+      
 
     };
 
 
 }();
-$(function () {
-    Customer.initCustomerList();
-});

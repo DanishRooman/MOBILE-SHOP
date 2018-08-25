@@ -6,12 +6,12 @@
 
 <div class="row">
     <div class="col-md-12">
-        
+
         @Html.ActionLink("Add Customer", "AddCustomer", "Customer", null, new { @class = "btn btn-primary" })
         <br /><br />
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <i class="fa fa-bar-chart-o fa-fw"></i> Customer Details
+                Customer Details
                 <div class="pull-right">
 
                 </div>
@@ -26,7 +26,12 @@
     </div>
 </div>
 @section scripts{
-  <script src="~/ProjectScript/Customer/Customer.js"></script>
-                
-  }
+    <script src="~/ProjectScript/Customer/Customer.js"></script>
+    <script type="text/javascript">
+    $(function () {
+    Customer.initCustomerList();
+    });
+</script>
+
+}
 

@@ -30,26 +30,66 @@ namespace MOBILESHOP.Controllers
             {
                 using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
-                    mbshop_customer_details mbshop = new mbshop_customer_details()
+                    if (dto.id == 0)
                     {
+                        mbshop_customer_details mbshop = new mbshop_customer_details()
+                        {
 
-                        customer_name = dto.Name,
-                        customer_address = dto.Address,
-                        customer_email = dto.Email,
-                        customer_mobile_number = dto.Mobile
-                    };
-                    dbcontext.mbshop_customer_details.Add(mbshop);
-                    dbcontext.SaveChanges();
-                    return Json(new { key = true, value = "Customer added successfully" }, JsonRequestBehavior.AllowGet);
-
+                            customer_name = dto.Name,
+                            customer_address = dto.Address,
+                            customer_email = dto.Email,
+                            customer_mobile_number = dto.Mobile
+                        };
+                        dbcontext.mbshop_customer_details.Add(mbshop);
+                        dbcontext.SaveChanges();
+                        return Json(new { key = true, value = "Customer added successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        var data = dbcontext.mbshop_customer_details.Find(dto.id);
+                        if (data != null)
+                        {
+                            data.customer_name = dto.Name;
+                            data.customer_address = dto.Address;
+                            data.customer_email = dto.Email;
+                            data.customer_mobile_number = dto.Mobile;
+                            dbcontext.SaveChanges();
+                            return Json(new { key = true, value = "Customer update successfully" }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { key = false, value = "Customer is not found" }, JsonRequestBehavior.AllowGet);
+                        }
+                    }
                 };
-            }
+                }
             catch (Exception ex)
             {
 
                 return Json(new { key = false, value = "Unable to save the Customer" }, JsonRequestBehavior.AllowGet); ;
             }
         }
+
+
+        public ActionResult EditCostumer(int id)
+        {
+            using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+            {
+                var row = dbcontext.mbshop_customer_details.Find(id);
+                CustomerDTO dto = new CustomerDTO()
+                {
+                    id = row.customer_id,
+                    Address = row.customer_address,
+                    Email = row.customer_email,
+                    Mobile = row.customer_mobile_number,
+                    Name = row.customer_name
+                };
+                return View("AddCustomer", dto);
+            };
+        }
+
+
+
         [HttpGet]
         public ActionResult CustomerListing()
         {
@@ -78,16 +118,16 @@ namespace MOBILESHOP.Controllers
 
                 throw;
             }
-           
+
         }
         public ActionResult DeleteCustomer(int id)
         {
             try
             {
-                using (MOBILESHOPEntities dbcontext=new MOBILESHOPEntities())
+                using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
                     var cstmr = dbcontext.mbshop_customer_details.Find(id);
-                    if (cstmr !=null)
+                    if (cstmr != null)
                     {
                         dbcontext.mbshop_customer_details.Remove(cstmr);
                         dbcontext.SaveChanges();
@@ -105,7 +145,7 @@ namespace MOBILESHOP.Controllers
 
                 return Json(new { key = false, value = "Unable to the Customer" }, JsonRequestBehavior.AllowGet);
             }
-           
+
         }
     }
 
