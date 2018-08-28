@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Brand\BrandDTO.cs" />
     <Compile Include="Customer\CustomerDTO.cs" />
+    <Compile Include="Fault\FaultDTO.cs" />
+    <Compile Include="mbModel\ModelDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

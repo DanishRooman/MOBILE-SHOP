@@ -1,0 +1,39 @@
+﻿@model DataTransferObject.Fault.FaultDTO
+@Scripts.Render("~/Script/unobstrasive")
+@{
+    ViewBag.Title = "AddFault";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/ProjectScript/Fault/Fault.js"></script>
+<h2>Add Mobile Fault</h2>
+
+
+@using (Ajax.BeginForm("AddOrUpdateFault", "Fault", new AjaxOptions { OnSuccess = "Fault.initSuccessFault" }))
+{
+
+
+    <div class="form-horizontal">
+       
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.faultName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.faultName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.faultName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

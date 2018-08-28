@@ -1,0 +1,34 @@
+﻿@model DataTransferObject.Brand.BrandDTO
+@Scripts.Render("~/Script/unobstrasive")
+@{
+    ViewBag.Title = "AddBrand";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/ProjectScript/Brand/Brand.js"></script>
+<h2>Add Mobile Brand</h2>
+
+
+@using (Ajax.BeginForm("AddOrUpdateBrand", "Brand", new AjaxOptions { OnSuccess = "Brand.initBrandSuccess" }))
+{
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.BrandName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BrandName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BrandName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+         <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

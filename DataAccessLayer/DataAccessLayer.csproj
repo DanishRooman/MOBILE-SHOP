@@ -69,6 +69,18 @@
     <Compile Include="DBContext\mbshop_customer_details.cs">
       <DependentUpon>MOBILESHOP.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\mbshop_device_detail.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\mb_brand_detail.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\mb_fault_detail.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\mb_model_detail.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\MOBILESHOP.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -84,21 +96,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MOBILESHOP.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\sysdiagrams.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="DBContext\MOBILESHOP.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MOBILESHOP.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="DBContext\MOBILESHOP.edmx.diagram">
       <DependentUpon>MOBILESHOP.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="DBContext\MOBILESHOP.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -110,9 +127,6 @@
       <DependentUpon>MOBILESHOP.edmx</DependentUpon>
       <LastGenOutput>MOBILESHOP.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

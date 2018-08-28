@@ -1,5 +1,5 @@
 ﻿var Customer = function () {
-
+    //private Static
 
     var handleEmptyCustomer = function () {
         $('.form-control').val("");
@@ -7,7 +7,7 @@
     };
 
     var handleSuccessCustomer = function (result) {
-        debugger
+       
         if (result.key) {
 
             $.toast({

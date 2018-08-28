@@ -276,6 +276,7 @@ table {
   .btn > .caret,
   .dropup > .btn > .caret {
     border-top-color: #000 !important;
+    width:100%;
   }
   .label {
     border: 1px solid #000;
@@ -2490,6 +2491,7 @@ fieldset[disabled] .btn-danger.active {
   color: #ffffff;
   background-color: #5cb85c;
   border-color: #4cae4c;
+  width:100% !important;
 }
 
 .btn-success:hover,

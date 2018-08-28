@@ -47,7 +47,10 @@ namespace MOBILESHOP
             bundles.Add(new ScriptBundle("~/bundles/Toast-and-Confirm").Include(
                      "~/assets/owl-carousel/owl.carousel.js",
                          "~/Scripts/jquery.toast.min.js",
-                        "~/Scripts/jquery-confirm.js"
+                        "~/Scripts/jquery-confirm.js",
+                        "~/Scripts/select2.min.js"
+
+
                          ));
             //----------------------- CSS ------------------------//
 
@@ -57,7 +60,8 @@ namespace MOBILESHOP
                   "~/Content/jquery.toast.min.css",
                      "~/fonts/font-awesome.css",
                       "~/Content/bootstrap.css",
-                      "~/assets/style.css"
+                      "~/assets/style.css",
+                        "~/Content/select2.min.css"
                       /*"~/Content/site.css"*/));
 
             bundles.Add(new StyleBundle("~/Content/owl-carousel-css").Include(
