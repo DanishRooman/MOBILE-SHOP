@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DataTransferObject.Brand.BrandDTO>
+
+<table class="table table-bordered table-hover table-striped" id="Brand">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BrandName)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrandName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                    <a href="javascript:void(0);" title="Delete Brand" onclick="Brand.initDeleteBrand(@item.id);">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Brand').DataTable({
+            aaSorting: []
+        });
+    });
+</script>

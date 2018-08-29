@@ -10,10 +10,7 @@
 
 @using (Ajax.BeginForm("AddOrUpdateFault", "Fault", new AjaxOptions { OnSuccess = "Fault.initSuccessFault" }))
 {
-
-
     <div class="form-horizontal">
-       
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -23,17 +20,35 @@
                 @Html.ValidationMessageFor(model => model.faultName, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <b>Fault Detail</b>
+                    <div class="pull-right">
+
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="divFault">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
-
-
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+   <script type="text/javascript">
+    $(function () {
+        Fault.initFaultList();
+    });
+</script>
 }

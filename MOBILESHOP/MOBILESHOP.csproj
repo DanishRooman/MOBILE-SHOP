@@ -329,6 +329,9 @@
     <Content Include="Views\Brand\AddBrand.cshtml" />
     <Content Include="Views\Fault\AddFault.cshtml" />
     <Content Include="Views\Model\AddModel.cshtml" />
+    <Content Include="Views\Brand\BrandListing.cshtml" />
+    <Content Include="Views\Model\ModelListing.cshtml" />
+    <Content Include="Views\Fault\_FaultListing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -21,6 +21,29 @@ namespace MOBILESHOP.Controllers
             FaultDTO dt = new FaultDTO();
             return View("AddFault",dt);
         }
+        [HttpGet]
+        public ActionResult FaultListing()
+        {
+            try
+            {
+                List<FaultDTO> faultList = new List<FaultDTO>();
+                using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                {
+                    faultList = dbcontext.mb_fault_detail.AsEnumerable().OrderByDescending(x => x.fault_key).Select(x => new FaultDTO
+                    {
+                        id = x.fault_key,
+                        faultName = x.fault_name
+                    }).ToList();
+                };
+                return PartialView("_FaultListing", faultList);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+        }
         public ActionResult AddOrUpdateFault(FaultDTO dto)
         {
             try

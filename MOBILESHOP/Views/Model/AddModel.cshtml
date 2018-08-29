@@ -14,7 +14,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-       
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -40,6 +40,23 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <b>Model Detail</b>
+                    <div class="pull-right">
+
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="divModel">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 
@@ -52,5 +69,8 @@
         $('.select2').select2({
             width: '100%'
         });
+    });
+    $(function () {
+        Model.initModelList();
     });
 </script>

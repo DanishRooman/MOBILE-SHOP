@@ -21,7 +21,22 @@
             });
         }
     };
+    var handleModelListing = function () {
+        $.ajax({
+            url: '/Model/ModelListing',
+            type: 'GET',
+            dataType: 'HTML',
+            data: {},
+            success: function (result) {
+                $("#divModel").empty();
+                $("#divModel").html(result);
+            },
+            error: function () {
+                console.log("Error");
+            }
+        });
 
+    };
 
     handleEmptyModel = function () {
         $('.form-control').val("");
@@ -33,6 +48,9 @@
 
         initSuccessModel: function (result) {
               handleSuccessModel(result);
+        },
+        initModelList: function () {
+            handleModelListing();
         },
     };
 

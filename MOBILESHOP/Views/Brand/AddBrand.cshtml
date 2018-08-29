@@ -4,14 +4,18 @@
     ViewBag.Title = "AddBrand";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/ProjectScript/Brand/Brand.js"></script>
-<h2>Add Mobile Brand</h2>
 
+<h2>Add Mobile Brand</h2>
+<div class="row">
+    <div class="col-md-12">
+
+    </div>
+</div>
 
 @using (Ajax.BeginForm("AddOrUpdateBrand", "Brand", new AjaxOptions { OnSuccess = "Brand.initBrandSuccess" }))
 {
     <div class="form-horizontal">
-        
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -21,9 +25,27 @@
                 @Html.ValidationMessageFor(model => model.BrandName, "", new { @class = "text-danger" })
             </div>
         </div>
-         <div class="form-group">
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-10">
+         
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <b>Brand Detail</b>
+                    <div class="pull-right">
+
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="divBrand">
+                 </div>
+                </div>
             </div>
         </div>
     </div>
@@ -31,4 +53,10 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script src="~/ProjectScript/Brand/Brand.js"></script>
+<script type="text/javascript">
+    $(function () {
+        Brand.initBrandList();
+    });
+</script>
 }

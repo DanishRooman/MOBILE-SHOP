@@ -22,20 +22,30 @@
         }
 
     };
+    var handleFaultList = function () {
+        $.ajax({
+            url: '/Fault/FaultListing',
+            type: 'GET',
+            dataType: 'HTML',
+            data: {},
+            success: function (result) {
+                $("#divFault").empty();
+                $("#divFault").html(result);
+            },
+            error: function () {
+                console.log("Error");
+            }
+        });
+    };
     var handleEmptyFault = function () {
         $('.form-control').val("");
     };
-
-
-    return {
-
-
+     return {
         initSuccessFault: function (result) {
             handleSuccessFault(result);
         },
-
+        initFaultList: function () {
+            handleFaultList();
+        },
     };
-
-
-
 }();
