@@ -20,8 +20,7 @@ namespace MOBILESHOP.Controllers
         public ActionResult AddBrand()
         {
             BrandDTO dt = new BrandDTO();
-
-            return View("AddBrand", dt);
+            return PartialView("AddBrand", dt);
         }
         [HttpPost]
         public ActionResult AddOrUpdateBrand(BrandDTO dt)
@@ -63,7 +62,7 @@ namespace MOBILESHOP.Controllers
                 }).ToList();
             };
             return PartialView("BrandListing", brandlist);
-        }         
+        }
         public ActionResult DeleteBrand(int id)
         {
             try

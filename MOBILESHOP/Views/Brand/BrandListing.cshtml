@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<DataTransferObject.Brand.BrandDTO>
 
-<table class="table table-bordered table-hover table-striped" id="Brand">
+<table class="table table-bordered table-hover table-striped" id="tblBrand">
     <thead>
         <tr>
             <th>
@@ -31,7 +31,7 @@
 </table>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#Brand').DataTable({
+        $('#tblBrand').DataTable({
             aaSorting: []
         });
     });

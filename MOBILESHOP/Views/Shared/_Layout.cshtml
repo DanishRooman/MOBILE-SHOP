@@ -11,6 +11,7 @@
     @Styles.Render("~/Contents/Datatable-style")
 
     @Scripts.Render("~/bundles/jquery")
+   
 </head>
 <body>
 
@@ -31,60 +32,63 @@
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        <li>@Html.ActionLink("Customer Detail", "Index", "Customer")</li>
-                        <li>@Html.ActionLink("Add Brand", "AddBrand", "Brand")</li>
-                        <li>@Html.ActionLink("Add Fault", "AddFault", "Fault")</li>
-                        <li>@Html.ActionLink("Add Model", "AddModel", "Model")</li>
-                        @*<li>@Html.ActionLink("Add Customer", "AddCustomer", "Customer")*@
-                        <li>
-
-
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Menage Detail
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Customer Detail", "Index", "Customer")</li>
+                                <li>@Html.ActionLink("Add Brand", "AddBrand", "Brand")</li>
+                                <li>@Html.ActionLink("Add Fault", "AddFault", "Fault")</li>
+                                <li>@Html.ActionLink("Add Model", "AddModel", "Model")</li>
+                            </ul>
+                        </li>
                     </ul>
                     @Html.Partial("_LoginPartial")
                 </div>
-                <!-- #Nav Ends -->
+               <!----#Nav Ends -->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="container">
+                    <!-- Header Starts -->
+                <div class="header">
+                    <br />
+                    <br /><br /><br />
+                    @*<a href="default.aspx"><img src="~/images/logo1.png" alt="Dream House logo" width="100%"></a>*@
+                </div>
+            </div>
+
+            <div class="container body-content">
+                @RenderBody()
+            </div>
+
+
+            <div class="clearfix">
+                <br />
+                <br />
+                <br />
+            </div>
+            <div class="footer text-center" style="bottom:0!important;position: fixed; width: 100%; height:50px !important;">
+
+                <div class="row">
+                    ( الحقوق محفوظة لـ(  <a href="http://bariq-tech.com">بريق التكنولوجيا</a> )
+                </div>
+
 
             </div>
-        </div>
+            @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+            @*<script src="~/Scripts/jquery-1.10.2.js"></script>*@
+            @*@<script src="~/Scripts/jquery.dataTables.min.js"></script>
+            @*<script src="~/Scripts/jqury-DataTable.js"></script>*@
 
-    </div>
-    <div class="container">
-        <!-- Header Starts -->
-        <div class="header">
-            <br />
-            <br /><br /><br />
-            @*<a href="default.aspx"><img src="~/images/logo1.png" alt="Dream House logo" width="100%"></a>*@
-        </div>
-    </div>
-
-    <div class="container body-content">
-        @RenderBody()
-    </div>
-
-
-    <div class="clearfix">
-        <br />
-        <br />
-        <br />
-    </div>
-    <div class="footer text-center" style="bottom:0!important;position: fixed; width: 100%; height:50px !important;">
-
-        <div class="row">
-            ( الحقوق محفوظة لـ(  <a href="http://bariq-tech.com">بريق التكنولوجيا</a> )
-        </div>
-
-
-    </div>
-    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
-    @*<script src="~/Scripts/jquery-1.10.2.js"></script>*@
-    <script src="~/Scripts/jquery.dataTables.min.js"></script>
-    @*<script src="~/Scripts/jqury-DataTable.js"></script>*@
-
-    @Scripts.Render("~/bundles/Toast-and-Confirm")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/script")
-    @Scripts.Render("~/bundles/owl.carousel")
-    @Scripts.Render("~/bundles/slitslider")
-    @RenderSection("scripts", required: false)
+            @Scripts.Render("~/bundles/Toast-and-Confirm")
+            @Scripts.Render("~/bundles/bootstrap")
+            @Scripts.Render("~/bundles/script")
+            @Scripts.Render("~/bundles/owl.carousel")
+            @Scripts.Render("~/bundles/slitslider")
+            @RenderSection("scripts", required: false)
 </body>
 </html>

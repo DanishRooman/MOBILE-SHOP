@@ -9,6 +9,7 @@ namespace MOBILESHOP
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                            "~/Scripts/jquery-1.10.2.min.js",
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -21,12 +22,13 @@ namespace MOBILESHOP
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/Script/unobstrasive").Include(
               "~/Scripts/jquery.unobtrusive-ajax.js",
               "~/Scripts/jquery.validate.min.js"
-
+           
              ));
 
             bundles.Add(new ScriptBundle("~/Script/unobtrusive-script").Include(
@@ -53,9 +55,10 @@ namespace MOBILESHOP
 
                          ));
             //----------------------- CSS ------------------------//
-
+                
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                //"~/Content/bootstrap.min.css",
                 "~/Content/jquery-confirm.css",
                   "~/Content/jquery.toast.min.css",
                      "~/fonts/font-awesome.css",

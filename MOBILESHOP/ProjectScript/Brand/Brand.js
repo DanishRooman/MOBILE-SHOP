@@ -1,5 +1,23 @@
 ﻿var Brand = function () {
-   
+    var handleCreateBrand = function () {
+
+        //Ajax call
+        $.ajax({
+            url: '/Brand/AddBrand',
+            type: 'GET',
+            dataType: 'HTML',
+            data: {},
+            success: function (result) {
+                $("#CreateBrand").empty();
+                $("#CreateBrand").html(result);
+                $("#CreateBrand").modal("show");
+            },
+            error: function () {
+                console.log("Error");
+            }
+        });
+
+    };
     var handleSuccesBrand = function (result) {
         if (result.key) {
 
@@ -91,6 +109,9 @@
         $('.form-control').val("");
         };
     return {
+        initCreateBrand: function () {
+            handleCreateBrand();
+        },
 
         initBrandSuccess: function (result) {
           handleSuccesBrand(result);
