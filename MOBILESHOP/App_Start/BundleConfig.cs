@@ -22,13 +22,12 @@ namespace MOBILESHOP
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/Script/unobstrasive").Include(
               "~/Scripts/jquery.unobtrusive-ajax.js",
               "~/Scripts/jquery.validate.min.js"
-           
+
              ));
 
             bundles.Add(new ScriptBundle("~/Script/unobtrusive-script").Include(
@@ -47,25 +46,29 @@ namespace MOBILESHOP
                       "~/assets/slitslider/js/jquery.slitslider.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/Toast-and-Confirm").Include(
-                     "~/assets/owl-carousel/owl.carousel.js",
-                         "~/Scripts/jquery.toast.min.js",
-                        "~/Scripts/jquery-confirm.js",
-                        "~/Scripts/select2.min.js"
+                "~/assets/owl-carousel/owl.carousel.js",
+                "~/Scripts/jquery.toast.min.js",
+                "~/Scripts/jquery-confirm.js",
+                "~/Scripts/select2.min.js",
+                "~/fontawesome/js/fontawesome.js",
+                "~/Scripts/jquery.dataTables.min.js",
+                "~/Scripts/dataTables.bootstrap.min.js"
+                ));
 
 
-                         ));
             //----------------------- CSS ------------------------//
-                
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                //"~/Content/bootstrap.min.css",
+                "~/Content/bootstrap.css",
                 "~/Content/jquery-confirm.css",
-                  "~/Content/jquery.toast.min.css",
-                     "~/fonts/font-awesome.css",
-                      "~/Content/bootstrap.css",
-                      "~/assets/style.css",
-                        "~/Content/select2.min.css"
-                      /*"~/Content/site.css"*/));
+                "~/Content/jquery.toast.min.css",
+                "~/assets/style.css",
+                "~/Content/select2.min.css",
+                "~/fontawesome/css/fontawesome.css"
+               ));
+
+
 
             bundles.Add(new StyleBundle("~/Content/owl-carousel-css").Include(
                      "~/assets/owl-carousel/owl.carousel.css",

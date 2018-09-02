@@ -21,8 +21,10 @@
                     @Html.DisplayFor(modelItem => item.BrandName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @*@Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                    <a href="javascript:void(0);" title="Update Brand" onclick="Brand.initUpdateBrand(@item.id);">Edit</a> |
                     <a href="javascript:void(0);" title="Delete Brand" onclick="Brand.initDeleteBrand(@item.id);">Delete</a>
                 </td>
             </tr>

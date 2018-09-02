@@ -10,6 +10,7 @@
             success: function (result) {
                 $("#CreateBrand").empty();
                 $("#CreateBrand").html(result);
+                $("#brandTitle").text("Add Mobile Brand");
                 $("#CreateBrand").modal("show");
             },
             error: function () {
@@ -29,7 +30,7 @@
             });
             handleBrandList();
             handleEmptyBrand();
-           
+
         }
         else {
             $.toast({
@@ -59,7 +60,6 @@
 
     };
     var handleDeleteBrand = function (id) {
-        debugger
         $.confirm({
             title: 'Delete Brand',
             content: 'Are you sure you want to delete this brand?',
@@ -70,7 +70,7 @@
                     keys: ["enter"],
                     action: function () {
                         $.ajax({
-                            url:'/Brand/DeleteBrand',
+                            url: '/Brand/DeleteBrand',
                             type: 'GET',
                             dataType: 'json',
                             data: { "id": id },
@@ -107,20 +107,41 @@
     };
     var handleEmptyBrand = function () {
         $('.form-control').val("");
-        };
+        $("#CreateBrand").modal("hide");
+    };
+    var handleUpdateBrand = function (id) {
+        $.ajax({
+            url: '/Brand/UpdateBrand',
+            type: 'GET',
+            dataType: 'HTML',
+            data: { "id": id },
+            success: function (result) {
+                $("#CreateBrand").empty();
+                $("#CreateBrand").html(result);
+                $("#brandTitle").text("Update Mobile Brand");
+                $("#CreateBrand").modal("show");
+            },
+            error: function () {
+                console.log("Error");
+            }
+        });
+    };
     return {
         initCreateBrand: function () {
             handleCreateBrand();
         },
 
         initBrandSuccess: function (result) {
-          handleSuccesBrand(result);
+            handleSuccesBrand(result);
         },
         initBrandList: function () {
             handleBrandList();
         },
         initDeleteBrand: function (id) {
             handleDeleteBrand(id);
+        },
+        initUpdateBrand: function (id) {
+            handleUpdateBrand(id);
         },
 
     };
