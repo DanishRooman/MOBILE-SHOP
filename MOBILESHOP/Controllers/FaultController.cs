@@ -11,15 +11,18 @@ namespace MOBILESHOP.Controllers
     [Authorize]
     public class FaultController : Controller
     {
+        public object MobileDTO { get; private set; }
+
         // GET: Fault
         public ActionResult Index()
         {
             return View();
         }
+        [HttpGet]
         public ActionResult AddFault()
         {
             FaultDTO dt = new FaultDTO();
-            return View("AddFault",dt);
+            return PartialView("AddFault", dt);
         }
         [HttpGet]
         public ActionResult FaultListing()
@@ -42,29 +45,96 @@ namespace MOBILESHOP.Controllers
 
                 throw;
             }
-           
+
         }
+        [HttpPost]
         public ActionResult AddOrUpdateFault(FaultDTO dto)
         {
             try
             {
-                using (MOBILESHOPEntities dbcontext=new MOBILESHOPEntities())
+                if (dto.id != 0)
                 {
-                    mb_fault_detail mbfault = new mb_fault_detail()
+                    using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                     {
-                        fault_name=dto.faultName
+                        int key = dto.id;
+                        var fault = dbcontext.mb_fault_detail.Find(key);
+                        if (fault != null)
+                        {
+                            fault.fault_name = dto.faultName;
+                            dbcontext.SaveChanges();
+                            return Json(new { key = true, value = "Fault updated successfully" }, JsonRequestBehavior.AllowGet);
+
+                        }
+                        else
+                        {
+                            return Json(new { key = true, value = "Fault not found" }, JsonRequestBehavior.AllowGet);
+                        }
                     };
-                    dbcontext.mb_fault_detail.Add(mbfault);
-                    dbcontext.SaveChanges();
-                    return Json(new { key = true, value = "fault added successfully" }, JsonRequestBehavior.AllowGet);
-                };
+                }
+                else
+                {
+                    using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                    {
+                        mb_fault_detail mbfault = new mb_fault_detail()
+                        {
+                            fault_name = dto.faultName
+                        };
+                        dbcontext.mb_fault_detail.Add(mbfault);
+                        dbcontext.SaveChanges();
+                        return Json(new { key = true, value = "fault added successfully" }, JsonRequestBehavior.AllowGet);
+                    };
+                }
+
             }
             catch (Exception)
             {
 
                 return Json(new { key = false, value = "fault is not found" }, JsonRequestBehavior.AllowGet);
             }
-          
+
+       
+        }
+        public ActionResult DeleteFault(int id)
+        {
+            try
+            {
+                using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                {
+                    var fault = dbcontext.mb_fault_detail.Find(id);
+                    if (fault != null)
+                    {
+                        dbcontext.mb_fault_detail.Remove(fault);
+                        dbcontext.SaveChanges();
+                        return Json(new { key = true, value = "Fault deleted successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { key = false, value = "Fault not Found its Deleted from data base!!" }, JsonRequestBehavior.AllowGet);
+                    }
+
+                };
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+           
+
+        }
+       
+        public ActionResult UpdateFault(int id)
+        {
+            FaultDTO dt = new FaultDTO();
+            using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+            {
+
+                var fault = dbcontext.mb_fault_detail.Find(id);
+                dt.id = fault.fault_key;
+                dt.faultName = fault.fault_name;
+             };
+            return PartialView("AddFault",dt);
 
         }
     }

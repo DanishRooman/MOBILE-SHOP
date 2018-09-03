@@ -1,54 +1,77 @@
 ﻿@model DataTransferObject.Fault.FaultDTO
 @Scripts.Render("~/Script/unobstrasive")
-@{
-    ViewBag.Title = "AddFault";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<script src="~/ProjectScript/Fault/Fault.js"></script>
-<h2>Add Mobile Fault</h2>
+@Scripts.Render("~/Script/unobtrusive-script")
 
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        @using (Ajax.BeginForm("AddOrUpdateFault", "Fault", new AjaxOptions { OnSuccess = "Fault.initSuccessFault" }))
+        {
 
-@using (Ajax.BeginForm("AddOrUpdateFault", "Fault", new AjaxOptions { OnSuccess = "Fault.initSuccessFault" }))
-{
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.faultName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.faultName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.faultName, "", new { @class = "text-danger" })
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="FaultTitle"></h4>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.id)
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.faultName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.faultName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.faultName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
-        </div>
+        }
     </div>
-    <div class="row">
-        <div class="col-md-offset-2 col-md-10">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <b>Fault Detail</b>
-                    <div class="pull-right">
+</div>
 
-                    </div>
+
+
+
+
+
+
+
+
+
+
+
+@*@using (Html.BeginForm())
+    {
+
+
+        <div class="form-horizontal">
+            <h4>FaultDTO</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.faultName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.faultName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.faultName, "", new { @class = "text-danger" })
                 </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <div id="divFault">
-                    </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
                 </div>
             </div>
         </div>
-    </div>
-}
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-   <script type="text/javascript">
-    $(function () {
-        Fault.initFaultList();
-    });
-</script>
-}
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
