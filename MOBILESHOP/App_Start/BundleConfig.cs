@@ -52,7 +52,9 @@ namespace MOBILESHOP
                 "~/Scripts/select2.min.js",
                 "~/fontawesome/js/fontawesome.js",
                 "~/Scripts/jquery.dataTables.min.js",
-                "~/Scripts/dataTables.bootstrap.min.js"
+                "~/Scripts/dataTables.bootstrap.min.js",
+                "~/Scripts/moment.js",
+                "~/Scripts/bootstrap-datetimepicker.js"
                 ));
 
 
@@ -65,7 +67,8 @@ namespace MOBILESHOP
                 "~/Content/jquery.toast.min.css",
                 "~/assets/style.css",
                 "~/Content/select2.min.css",
-                "~/fontawesome/css/fontawesome.css"
+                "~/fontawesome/css/fontawesome.css",
+                "~/Content/bootstrap-datetimepicker.min.css"
                ));
 
 
