@@ -14,10 +14,19 @@ namespace DataAccessLayer.DBContext
     
     public partial class mbshop_customer_details
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public mbshop_customer_details()
+        {
+            this.mbshop_device_detail = new HashSet<mbshop_device_detail>();
+        }
+    
         public int customer_id { get; set; }
         public string customer_name { get; set; }
         public string customer_address { get; set; }
         public string customer_email { get; set; }
         public string customer_mobile_number { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<mbshop_device_detail> mbshop_device_detail { get; set; }
     }
 }

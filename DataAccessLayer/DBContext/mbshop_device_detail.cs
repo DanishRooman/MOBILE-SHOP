@@ -28,10 +28,12 @@ namespace DataAccessLayer.DBContext
         public int device_fault_key { get; set; }
         public System.DateTime device_date_submitt { get; set; }
         public string device_description { get; set; }
+        public int device_costumer { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<mb_device_images> mb_device_images { get; set; }
         public virtual mb_fault_detail mb_fault_detail { get; set; }
         public virtual mb_model_detail mb_model_detail { get; set; }
+        public virtual mbshop_customer_details mbshop_customer_details { get; set; }
     }
 }
