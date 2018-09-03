@@ -75,6 +75,9 @@
     <Compile Include="DBContext\mb_brand_detail.cs">
       <DependentUpon>MOBILESHOP.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\mb_device_images.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\mb_fault_detail.cs">
       <DependentUpon>MOBILESHOP.tt</DependentUpon>
     </Compile>
@@ -95,9 +98,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MOBILESHOP.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\sysdiagrams.cs">
-      <DependentUpon>MOBILESHOP.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

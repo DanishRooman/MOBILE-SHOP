@@ -1,5 +1,7 @@
 ﻿using DataAccessLayer.DBContext;
+using DataTransferObject.Brand;
 using DataTransferObject.Customer;
+using DataTransferObject.mbModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,25 @@ namespace MOBILESHOP.Controllers
         public ActionResult AddCustomer()
         {
             CustomerDTO dt = new CustomerDTO();
+            using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+            {
+                dt.brandList = dbcontext.mb_brand_detail.AsEnumerable().Select(x => new BrandDTO
+                {
+                    id = x.brand_key,
+                    BrandName = x.brand_name
+                }).ToList();
+                dt.modelList = dbcontext.mb_model_detail.AsEnumerable().Select(x => new ModelDTO
+                {
+                    id = x.model_key,
+                    modelName = x.model_name
+                }).ToList();
+                dt.faultList = dbcontext.mb_fault_detail.AsEnumerable().Select(x => new DataTransferObject.Fault.FaultDTO
+                {
+                    id = x.fault_key,
+                    faultName = x.fault_name
+                }).ToList();
+            };
+
             return View("AddCustomer", dt);
         }
         [HttpPost]
@@ -62,7 +83,7 @@ namespace MOBILESHOP.Controllers
                         }
                     }
                 };
-                }
+            }
             catch (Exception ex)
             {
 

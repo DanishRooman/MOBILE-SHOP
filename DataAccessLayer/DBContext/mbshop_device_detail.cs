@@ -14,6 +14,12 @@ namespace DataAccessLayer.DBContext
     
     public partial class mbshop_device_detail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public mbshop_device_detail()
+        {
+            this.mb_device_images = new HashSet<mb_device_images>();
+        }
+    
         public int device_key { get; set; }
         public string device_serial_number { get; set; }
         public string device_imei_number_1 { get; set; }
@@ -22,8 +28,9 @@ namespace DataAccessLayer.DBContext
         public int device_fault_key { get; set; }
         public System.DateTime device_date_submitt { get; set; }
         public string device_description { get; set; }
-        public byte[] device_condition_image { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<mb_device_images> mb_device_images { get; set; }
         public virtual mb_fault_detail mb_fault_detail { get; set; }
         public virtual mb_model_detail mb_model_detail { get; set; }
     }

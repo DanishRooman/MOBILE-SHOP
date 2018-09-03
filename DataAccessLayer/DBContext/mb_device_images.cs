@@ -12,12 +12,12 @@ namespace DataAccessLayer.DBContext
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class mb_device_images
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int image_key { get; set; }
+        public string image_path { get; set; }
+        public int device_id { get; set; }
+    
+        public virtual mbshop_device_detail mbshop_device_detail { get; set; }
     }
 }
