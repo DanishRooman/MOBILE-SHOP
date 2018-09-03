@@ -1,76 +1,72 @@
 ﻿@model DataTransferObject.mbModel.ModelDTO
 @Scripts.Render("~/Script/unobstrasive")
-@{
-    ViewBag.Title = "AddModel";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<script src="~/ProjectScript/Model/Model.js"></script>
-<h2>Add Mobile Model</h2>
+@Scripts.Render("~/Script/unobtrusive-script")
 
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+       @using (Ajax.BeginForm("AddOrUpdateModel", "Model", new AjaxOptions { OnSuccess = "Model.initSuccessModel" }))
+       {
 
-
-@using (Ajax.BeginForm("AddOrUpdateModel", "Model", new AjaxOptions { OnSuccess = "Model.initSuccessModel" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.modelName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.modelName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.modelName, "", new { @class = "text-danger" })
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="ModelTitle"></h4>
             </div>
-        </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Brand, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Brand, new SelectList(Model.brandList, "id", "BrandName"), "----Select Brand", new { @class = "form-control select2" })
-                @Html.ValidationMessageFor(model => model.Brand, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.modelName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.modelName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.modelName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Brand, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.Brand, new SelectList(Model.brandList, "id", "BrandName"), "----Select Brand", new { @class = "form-control select2" })
+                                    @Html.ValidationMessageFor(model => model.Brand, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="modal-footer">
                 <input type="submit" value="save" class="btn btn-primary" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-2 col-md-10">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <b>Model Detail</b>
-                    <div class="pull-right">
-
-                    </div>
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <div id="divModel">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-
-
-@section Scripts {
+   }
+ </div>
+</div>
+@*@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+}*@
+<script src="~/ProjectScript/Model/Model.js"></script>
 <script type="text/javascript">
     $(function () {
         $('.select2').select2({
             width: '100%'
         });
     });
-    $(function () {
-        Model.initModelList();
-    });
+    //$(function () {
+    //    Model.initModelList();
+    //});
 </script>
+
+
+
+
+
+
+
+
+
+
+
+

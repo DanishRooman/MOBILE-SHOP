@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Mobile Fault Details</h2>
+        <button type="button" class="btn btn-primary" onclick="Fault.initCreateFault();"> Add New</button>
+        <br /><br />
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Mobile Fault Details
+                <div class="pull-right">
+
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div id="divFault">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Create group Modal-->
+<div id="CreateFault" class="modal fade" role="dialog">
+
+</div>
+<script src="~/ProjectScript/Fault/Fault.js"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        Fault.initFaultList();
+    });
+</script>

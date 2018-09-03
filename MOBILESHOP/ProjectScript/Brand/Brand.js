@@ -60,6 +60,7 @@
 
     };
     var handleDeleteBrand = function (id) {
+       
         $.confirm({
             title: 'Delete Brand',
             content: 'Are you sure you want to delete this brand?',
@@ -110,6 +111,7 @@
         $("#CreateBrand").modal("hide");
     };
     var handleUpdateBrand = function (id) {
+     
         $.ajax({
             url: '/Brand/UpdateBrand',
             type: 'GET',

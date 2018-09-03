@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<DataTransferObject.Fault.FaultDTO>
 
-<table class="table table-bordered table-hover table-striped" id="Fault">
+<table class="table table-bordered table-hover table-striped" id="tblFault">
     <thead>
         <tr>
             <th>
@@ -17,8 +17,10 @@
                     @Html.DisplayFor(modelItem => item.faultName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                    <a href="javascript:void(0);" title="Edit Fault" onclick="Fault.initUpdateFault(@item.id);">Edit</a> |
+                    <a href="javascript:void(0);" title="Delete Fault" onclick="Fault.initDeleteFault(@item.id);">Delete</a>
                 </td>
             </tr>
         }
@@ -26,7 +28,7 @@
 </table>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#Fault').DataTable({
+        $('#tblFault').DataTable({
             aaSorting: []
         });
     });

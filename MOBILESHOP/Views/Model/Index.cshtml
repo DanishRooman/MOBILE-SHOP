@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Mobile Model Details</h2>
+        <button type="button" class="btn btn-primary" onclick="Model.initCreateModel();"> Add New</button>
+        <br /><br />
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Mobile Model Details
+                <div class="pull-right">
+
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div id="divModel">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Create group Modal-->
+<div id="CreateModel" class="modal fade" role="dialog">
+
+</div>
+<script src="~/ProjectScript/Model/Model.js"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        Model.initModelList();
+    });
+</script>
+
+

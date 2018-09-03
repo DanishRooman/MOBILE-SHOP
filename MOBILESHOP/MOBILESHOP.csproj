@@ -78,6 +78,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
@@ -327,13 +328,15 @@
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\AddCustomer.cshtml" />
     <Content Include="Views\Customer\_CustomerListing.cshtml" />
-    <Content Include="Views\Fault\AddFault.cshtml" />
     <Content Include="Views\Model\AddModel.cshtml" />
     <Content Include="Views\Brand\BrandListing.cshtml" />
     <Content Include="Views\Model\ModelListing.cshtml" />
     <Content Include="Views\Fault\_FaultListing.cshtml" />
     <Content Include="Views\Brand\AddBrand.cshtml" />
     <Content Include="Views\Brand\Index.cshtml" />
+    <Content Include="Views\Fault\Index.cshtml" />
+    <Content Include="Views\Fault\AddFault.cshtml" />
+    <Content Include="Views\Model\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
