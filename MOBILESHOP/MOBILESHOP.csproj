@@ -238,6 +238,7 @@
     <Content Include="Content\jquery.toast.min.css" />
     <Content Include="Content\responsive.bootstrap.min.css" />
     <Content Include="Content\select2.min.css" />
+    <Content Include="Content\sidebarCSS.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome.css" />
     <Content Include="fonts\font-awesome.min.css" />
@@ -248,8 +249,12 @@
     <Content Include="images\bg.jpg" />
     <Content Include="images\bginside.jpg" />
     <Content Include="images\bgmain.png" />
+    <Content Include="images\img2.jpg" />
+    <Content Include="images\img4.jpg" />
     <Content Include="images\logo1.png" />
+    <Content Include="images\mobile.png" />
     <Content Include="images\ppLogo.png" />
+    <Content Include="images\sumsung.jpg" />
     <Content Include="ProjectScript\Brand\Brand.js" />
     <Content Include="ProjectScript\Customer\Customer.js" />
     <Content Include="ProjectScript\Fault\Fault.js" />
@@ -288,6 +293,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\sidebarjs.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

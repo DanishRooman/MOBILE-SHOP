@@ -5,16 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="424de5b841fd47cb92dcdbf07aa833f6" Name="Diagram1">
-        <EntityTypeShape EntityType="MOBILESHOPModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.C__MigrationHistory" Width="1.5" PointX="9.75" PointY="0.75" />
         <EntityTypeShape EntityType="MOBILESHOPModel.AspNetRoles" Width="1.5" PointX="5.75" PointY="7.5" />
         <EntityTypeShape EntityType="MOBILESHOPModel.AspNetUserClaims" Width="1.5" PointX="10.25" PointY="6" />
         <EntityTypeShape EntityType="MOBILESHOPModel.AspNetUserLogins" Width="1.5" PointX="10.25" PointY="8.75" />
         <EntityTypeShape EntityType="MOBILESHOPModel.AspNetUsers" Width="1.5" PointX="8" PointY="6.375" />
-        <EntityTypeShape EntityType="MOBILESHOPModel.mb_brand_detail" Width="1.5" PointX="0.75" PointY="1.75" />
-        <EntityTypeShape EntityType="MOBILESHOPModel.mb_device_images" Width="1.5" PointX="7.5" PointY="1.625" />
-        <EntityTypeShape EntityType="MOBILESHOPModel.mb_fault_detail" Width="1.5" PointX="3" PointY="5.75" />
-        <EntityTypeShape EntityType="MOBILESHOPModel.mb_model_detail" Width="1.5" PointX="3" PointY="1.5" />
-        <EntityTypeShape EntityType="MOBILESHOPModel.mbshop_customer_details" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.mb_brand_detail" Width="1.5" PointX="0.75" PointY="2" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.mb_device_images" Width="1.5" PointX="7.5" PointY="1.875" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.mb_fault_detail" Width="1.5" PointX="3" PointY="5.125" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.mb_model_detail" Width="1.5" PointX="3" PointY="1.75" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.mbshop_customer_details" Width="1.5" PointX="3" PointY="7.5" />
         <EntityTypeShape EntityType="MOBILESHOPModel.mbshop_device_detail" Width="1.5" PointX="5.25" PointY="1" />
         <AssociationConnector Association="MOBILESHOPModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="MOBILESHOPModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
@@ -22,6 +22,7 @@
         <AssociationConnector Association="MOBILESHOPModel.FK_mb_device_images_mbshop_device_detail" />
         <AssociationConnector Association="MOBILESHOPModel.FK_mbshop_device_detail_mb_fault_detail1" />
         <AssociationConnector Association="MOBILESHOPModel.FK_mbshop_device_detail_mb_model_detail" />
+        <AssociationConnector Association="MOBILESHOPModel.FK_mbshop_device_detail_mbshop_customer_details" />
         <AssociationConnector Association="MOBILESHOPModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>

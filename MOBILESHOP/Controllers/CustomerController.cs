@@ -119,13 +119,13 @@ namespace MOBILESHOP.Controllers
                 List<CustomerDTO> CstmrList = new List<CustomerDTO>();
                 using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
-                    CstmrList = dbcontext.mbshop_customer_details.AsEnumerable().OrderByDescending(x => x.customer_id).Select(x => new CustomerDTO
+                    CstmrList = dbcontext.mbshop_device_detail.AsEnumerable().OrderByDescending(x => x.device_key).Select(x => new CustomerDTO
                     {
-                        id = x.customer_id,
-                        Name = x.customer_name,
-                        Address = x.customer_address,
-                        Email = x.customer_email,
-                        Mobile = x.customer_mobile_number
+                        id = x.mbshop_customer_details.customer_id,
+                        Name = x.mbshop_customer_details.customer_name,
+                        Brand = x.mb_model_detail.model_brand_key,
+                        model = x.device_model_key,
+                        fault = x.device_fault_key,
 
                     }).ToList();
 

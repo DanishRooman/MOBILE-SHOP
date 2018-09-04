@@ -118,6 +118,7 @@
           <Property Name="device_fault_key" Type="int" Nullable="false" />
           <Property Name="device_date_submitt" Type="datetime" Nullable="false" />
           <Property Name="device_description" Type="varchar(max)" Nullable="false" />
+          <Property Name="device_costumer" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -231,6 +232,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_mbshop_device_detail_mbshop_customer_details">
+          <End Role="mbshop_customer_details" Type="Self.mbshop_customer_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="mbshop_device_detail" Type="Self.mbshop_device_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mbshop_customer_details">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="mbshop_device_detail">
+              <PropertyRef Name="device_costumer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="MOBILESHOPModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -276,6 +291,10 @@
             <End Role="mb_model_detail" EntitySet="mb_model_detail" />
             <End Role="mbshop_device_detail" EntitySet="mbshop_device_detail" />
           </AssociationSet>
+          <AssociationSet Name="FK_mbshop_device_detail_mbshop_customer_details" Association="Self.FK_mbshop_device_detail_mbshop_customer_details">
+            <End Role="mbshop_customer_details" EntitySet="mbshop_customer_details" />
+            <End Role="mbshop_device_detail" EntitySet="mbshop_device_detail" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -315,6 +334,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_mbshop_device_detail_mb_model_detail" Association="MOBILESHOPModel.FK_mbshop_device_detail_mb_model_detail">
             <End Role="mb_model_detail" EntitySet="mb_model_detail" />
+            <End Role="mbshop_device_detail" EntitySet="mbshop_device_detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mbshop_device_detail_mbshop_customer_details" Association="MOBILESHOPModel.FK_mbshop_device_detail_mbshop_customer_details">
+            <End Role="mbshop_customer_details" EntitySet="mbshop_customer_details" />
             <End Role="mbshop_device_detail" EntitySet="mbshop_device_detail" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="MOBILESHOPModel.AspNetUserRoles">
@@ -425,6 +448,7 @@
           <Property Name="customer_address" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="customer_email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="customer_mobile_number" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="mbshop_device_detail" Relationship="MOBILESHOPModel.FK_mbshop_device_detail_mbshop_customer_details" FromRole="mbshop_customer_details" ToRole="mbshop_device_detail" />
         </EntityType>
         <EntityType Name="mbshop_device_detail">
           <Key>
@@ -438,9 +462,11 @@
           <Property Name="device_fault_key" Type="Int32" Nullable="false" />
           <Property Name="device_date_submitt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="device_description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="device_costumer" Type="Int32" Nullable="false" />
           <NavigationProperty Name="mb_device_images" Relationship="MOBILESHOPModel.FK_mb_device_images_mbshop_device_detail" FromRole="mbshop_device_detail" ToRole="mb_device_images" />
           <NavigationProperty Name="mb_fault_detail" Relationship="MOBILESHOPModel.FK_mbshop_device_detail_mb_fault_detail1" FromRole="mbshop_device_detail" ToRole="mb_fault_detail" />
           <NavigationProperty Name="mb_model_detail" Relationship="MOBILESHOPModel.FK_mbshop_device_detail_mb_model_detail" FromRole="mbshop_device_detail" ToRole="mb_model_detail" />
+          <NavigationProperty Name="mbshop_customer_details" Relationship="MOBILESHOPModel.FK_mbshop_device_detail_mbshop_customer_details" FromRole="mbshop_device_detail" ToRole="mbshop_customer_details" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="MOBILESHOPModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -523,6 +549,20 @@
             </Principal>
             <Dependent Role="mbshop_device_detail">
               <PropertyRef Name="device_model_key" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mbshop_device_detail_mbshop_customer_details">
+          <End Type="MOBILESHOPModel.mbshop_customer_details" Role="mbshop_customer_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MOBILESHOPModel.mbshop_device_detail" Role="mbshop_device_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mbshop_customer_details">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="mbshop_device_detail">
+              <PropertyRef Name="device_costumer" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -639,6 +679,7 @@
           <EntitySetMapping Name="mbshop_device_detail">
             <EntityTypeMapping TypeName="MOBILESHOPModel.mbshop_device_detail">
               <MappingFragment StoreEntitySet="mbshop_device_detail">
+                <ScalarProperty Name="device_costumer" ColumnName="device_costumer" />
                 <ScalarProperty Name="device_description" ColumnName="device_description" />
                 <ScalarProperty Name="device_date_submitt" ColumnName="device_date_submitt" />
                 <ScalarProperty Name="device_fault_key" ColumnName="device_fault_key" />
