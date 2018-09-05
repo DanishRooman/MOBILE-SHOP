@@ -93,7 +93,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.datetime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.datetime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.datetime, new { htmlAttributes = new { @class = "form-control datepicker" } })
                 @Html.ValidationMessageFor(model => model.datetime, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -124,6 +124,7 @@
         $('.select2').select2({
             width: '100%'
         });
+        $('.datepicker ').datetimepicker();
     });
 </script>
 

@@ -63,6 +63,19 @@ namespace MOBILESHOP.Controllers
                         };
                         dbcontext.mbshop_customer_details.Add(mbshop);
                         dbcontext.SaveChanges();
+                        int costmerID = mbshop.customer_id;
+                        mbshop_device_detail device = new mbshop_device_detail()
+                        {
+                            device_costumer = costmerID,
+                            device_serial_number = dto.Serial,
+                            device_imei_number_1 = dto.imei_1,
+                            device_imei_number_2 = dto.imei_2,
+                            device_model_key = dto.model,
+                            device_fault_key = dto.fault,
+                            device_date_submitt = Convert.ToDateTime(dto.datetime),
+                            device_description = dto.Description,
+
+                        };
                         return Json(new { key = true, value = "Customer added successfully" }, JsonRequestBehavior.AllowGet);
                     }
                     else
