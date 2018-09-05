@@ -17,7 +17,7 @@ namespace MOBILESHOP.Controllers
         public ActionResult Index()
         {
 
-            return View();
+            return View(); 
         }
         [HttpGet]
         public ActionResult AddCustomer()
