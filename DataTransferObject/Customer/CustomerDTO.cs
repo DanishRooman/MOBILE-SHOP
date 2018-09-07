@@ -28,12 +28,12 @@ namespace DataTransferObject.Customer
         [Required]
         [Display(Name = "Mobile Number")]
         public string Mobile { get; set; }
-        [Required]
-        [Display(Name="Fault")]
-        public string Fault { get; set; }
-        [Required]
-        [Display(Name ="Model")]
-        public string Model { get; set; } 
+        //[Required]
+        //[Display(Name="Fault")]
+        //public string Fault { get; set; }
+        //[Required]
+        //[Display(Name ="Model")]
+        //public string Model { get; set; } 
         //Device
         [Required]
         [Display(Name = "Serial No")]

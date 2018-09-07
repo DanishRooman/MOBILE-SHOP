@@ -7,7 +7,7 @@
     };
 
     var handleSuccessCustomer = function (result) {
-       
+
         if (result.key) {
 
             $.toast({
@@ -16,6 +16,35 @@
                 showHideTransition: 'slide',
                 icon: 'success'
             });
+            //alert(result.key);
+            var deviceKey = result.id;
+            if (window.FormData !== undefined) {
+                var fileUpload = $("#fileUpload").get(0);
+                var files = fileUpload.files;
+                // Create FormData object  
+                var fileData = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+                fileData.append('deviceKey', deviceKey);
+                $.ajax({
+                    url: '/Customer/UploadFiles',
+                    type: "POST",
+                    contentType: false, // Not to set any content header  
+                    processData: false, // Not to process data  
+                    data: fileData,
+                    success: function (result) {
+
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            }
+            else {
+                alert("Form data not supported by browser");
+            }
+
             handleEmptyCustomer();
         }
         else {
@@ -106,7 +135,7 @@
         initDeleteCustomer: function (id) {
             handleDeleteCustomer(id);
         },
-      
+
 
     };
 

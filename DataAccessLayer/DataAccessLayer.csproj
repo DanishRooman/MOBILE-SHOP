@@ -99,6 +99,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MOBILESHOP.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\sysdiagrams.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

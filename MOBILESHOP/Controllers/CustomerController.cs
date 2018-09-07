@@ -4,6 +4,7 @@ using DataTransferObject.Customer;
 using DataTransferObject.mbModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -45,6 +46,7 @@ namespace MOBILESHOP.Controllers
             return View("AddCustomer", dt);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddCustomer(CustomerDTO dto)
         {
             try
@@ -74,9 +76,11 @@ namespace MOBILESHOP.Controllers
                             device_fault_key = dto.fault,
                             device_date_submitt = Convert.ToDateTime(dto.datetime),
                             device_description = dto.Description,
-
+                            
                         };
-                        return Json(new { key = true, value = "Customer added successfully" }, JsonRequestBehavior.AllowGet);
+                        dbcontext.mbshop_device_detail.Add(device);
+                        dbcontext.SaveChanges();
+                        return Json(new { key = true, value = "Customer added successfully", id=device.device_key}, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -105,6 +109,68 @@ namespace MOBILESHOP.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult UploadFiles()
+        {
+            // Checking no of files injected in Request object  
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //  Get all files from Request object  
+                    HttpFileCollectionBase files = Request.Files;
+                    int devicekey =Convert.ToInt32(Request.Form["deviceKey"]);
+
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        
+                        HttpPostedFileBase file = files[i];
+                        string fname;
+
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            fname = testfiles[testfiles.Length - 1];
+                        }
+                        else
+                        {
+                            fname = file.FileName + Guid.NewGuid();
+                        }
+                        string filePath = "~/Uploads/" + fname;
+                        // Get the complete folder path and store the file inside it.  
+                        fname = Path.Combine(Server.MapPath("~/Uploads/"), fname);
+                        file.SaveAs(fname);
+
+                        using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                        {
+
+                            mb_device_images images = new mb_device_images() {
+                                device_id = devicekey,
+                                image_path = filePath
+                            };
+                            dbcontext.mb_device_images.Add(images);
+                            dbcontext.SaveChanges();
+                        
+                        };
+                       
+
+
+                        }
+                    // Returns message that successfully uploaded  
+                    return Json("File Uploaded Successfully!");
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
+        }
+
         public ActionResult EditCostumer(int id)
         {
             using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
@@ -132,6 +198,7 @@ namespace MOBILESHOP.Controllers
                 List<CustomerDTO> CstmrList = new List<CustomerDTO>();
                 using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
+                    CustomerDTO dt = new CustomerDTO();
                     CstmrList = dbcontext.mbshop_device_detail.AsEnumerable().OrderByDescending(x => x.device_key).Select(x => new CustomerDTO
                     {
                         id = x.mbshop_customer_details.customer_id,

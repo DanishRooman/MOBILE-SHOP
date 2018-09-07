@@ -5,10 +5,11 @@
     ViewBag.Title = "AddCustomer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/ProjectScript/Customer/Customer.js"></script>
+
 
 @using (Ajax.BeginForm("AddCustomer", "Customer", new AjaxOptions { OnSuccess = "Customer.initCustomerSuccess" }))
 {
+    @Html.AntiForgeryToken()
     <div class="form-horizontal">
         <h2> Costumer Details </h2>
         <hr />
@@ -107,7 +108,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Images</label>
             <div class="col-md-10">
-                <input type="file" value="Browse" multiple class="form-control" accept="image/*" />
+                <input type="file" id="fileUpload" value="Browse" multiple class="form-control" accept="image/*" />
             </div>
         </div>
         <div class="form-group">
@@ -118,7 +119,7 @@
         </div>
     </div>
 }
-
+<script src="~/ProjectScript/Customer/Customer.js"></script>
 <script type="text/javascript">
     $(function () {
         $('.select2').select2({

@@ -36,5 +36,6 @@ namespace DataAccessLayer.DBContext
         public virtual DbSet<mb_model_detail> mb_model_detail { get; set; }
         public virtual DbSet<mbshop_customer_details> mbshop_customer_details { get; set; }
         public virtual DbSet<mbshop_device_detail> mbshop_device_detail { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }
