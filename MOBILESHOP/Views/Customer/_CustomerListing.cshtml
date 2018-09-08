@@ -8,13 +8,13 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Brand)
+                @Html.DisplayNameFor(model => model.BRAND)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.model)
+                @Html.DisplayNameFor(model => model.MODEL)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.fault)
+                @Html.DisplayNameFor(model => model.FAULT)
             </th>
             <th>
                 Action
@@ -30,13 +30,13 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Brand)
+                    @Html.DisplayFor(modelItem => item.BRAND)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.model)
+                    @Html.DisplayFor(modelItem => item.MODEL)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.fault)
+                    @Html.DisplayFor(modelItem => item.FAULT)
                 </td>
                 <td>
                    @Html.ActionLink("Edit", "EditCostumer", new { id = item.id }) |

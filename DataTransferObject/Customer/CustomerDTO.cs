@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace DataTransferObject.Customer
 {
-   public class CustomerDTO
+    public class CustomerDTO
     {
-       
+
         [Display(Name = "id")]
         public int id { get; set; }
 
@@ -28,13 +28,12 @@ namespace DataTransferObject.Customer
         [Required]
         [Display(Name = "Mobile Number")]
         public string Mobile { get; set; }
-        //[Required]
-        //[Display(Name="Fault")]
-        //public string Fault { get; set; }
-        //[Required]
-        //[Display(Name ="Model")]
-        //public string Model { get; set; } 
-        //Device
+        public string BRAND { get; set; }
+        public string MODEL { get; set; }
+        public string FAULT { get; set; }
+
+
+
         [Required]
         [Display(Name = "Serial No")]
         public string Serial { get; set; }

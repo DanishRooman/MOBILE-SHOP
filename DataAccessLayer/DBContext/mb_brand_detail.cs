@@ -22,7 +22,7 @@ namespace DataAccessLayer.DBContext
     
         public int brand_key { get; set; }
         public string brand_name { get; set; }
-    
+        public object Convert { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<mb_model_detail> mb_model_detail { get; set; }
     }

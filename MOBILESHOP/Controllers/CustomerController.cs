@@ -14,6 +14,8 @@ namespace MOBILESHOP.Controllers
     [Authorize]
     public class CustomerController : Controller
     {
+        private object brand_name;
+
         // GET: Customer
         public ActionResult Index()
         {
@@ -203,9 +205,9 @@ namespace MOBILESHOP.Controllers
                     {
                         id = x.mbshop_customer_details.customer_id,
                         Name = x.mbshop_customer_details.customer_name,
-                        Brand = x.mb_model_detail.model_brand_key,
-                        model = x.device_model_key,
-                        fault = x.device_fault_key,
+                        BRAND = x.mb_model_detail.mb_brand_detail.brand_name,
+                        MODEL = x.mb_model_detail.model_name,
+                        FAULT = x.mb_fault_detail.fault_name
 
                     }).ToList();
 
