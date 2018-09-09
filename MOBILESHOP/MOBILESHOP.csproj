@@ -347,6 +347,7 @@
     <Content Include="Views\Fault\Index.cshtml" />
     <Content Include="Views\Fault\AddFault.cshtml" />
     <Content Include="Views\Model\Index.cshtml" />
+    <Content Include="Views\Customer\EditCostumer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

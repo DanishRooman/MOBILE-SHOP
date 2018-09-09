@@ -15,7 +15,6 @@ namespace MOBILESHOP.Controllers
     [Authorize]
     public class CustomerController : Controller
     {
-        private object brand_name;
 
         // GET: Customer
         public ActionResult Index()
@@ -141,7 +140,7 @@ namespace MOBILESHOP.Controllers
                         var t = base64image.Substring(23);
                         var randomFileName = Guid.NewGuid().ToString().Substring(0, 4) + ".png";
                         string imgPath = Path.Combine(paths, randomFileName);
-                        string filePath = "~/Uploads/" + randomFileName;
+                        string filePath = "/Uploads/" + randomFileName;
                         byte[] bytes = Convert.FromBase64String(t);
                         System.IO.File.WriteAllBytes(imgPath, bytes);
                         using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
@@ -174,7 +173,7 @@ namespace MOBILESHOP.Controllers
                         {
                             fname = Guid.NewGuid() + file.FileName;
                         }
-                        string filePath = "~/Uploads/" + fname;
+                        string filePath = "/Uploads/" + fname;
                         // Get the complete folder path and store the file inside it.  
                         fname = Path.Combine(Server.MapPath("~/Uploads/"), fname);
                         file.SaveAs(fname);
@@ -247,8 +246,13 @@ namespace MOBILESHOP.Controllers
                     faultName = x.fault_name
                 }).ToList();
 
+                ViewBag.images = dbcontext.mb_device_images.AsEnumerable().Select(x => new DeviceImagesDTO
+                {
+                    Id = x.device_id,
+                    path = x.image_path
+                }).ToList();
 
-                return View("AddCustomer", dto);
+                return View("EditCostumer", dto);
             };
         }
 

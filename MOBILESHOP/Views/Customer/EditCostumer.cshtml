@@ -125,6 +125,26 @@
     </div>
 }
 
+<br />
+<h2> Device Images </h2>
+<hr />
+<div class="row">
+    @foreach (var item in (List<DataTransferObject.Customer.DeviceImagesDTO>)ViewBag.images)
+    {
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="@item.path">
+                    <img src="@item.path" alt="Image" style="width:100%">
+                    <div class="caption">
+                        <span class="glyphicon glyphicon-trash"></span> &nbsp; <span class="glyphicon glyphicon-download-alt"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+
 
 <div id="captureModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
