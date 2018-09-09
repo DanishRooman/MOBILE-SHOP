@@ -28,11 +28,7 @@ namespace DataTransferObject.Customer
         [Required]
         [Display(Name = "Mobile Number")]
         public string Mobile { get; set; }
-        public string BRAND { get; set; }
-        public string MODEL { get; set; }
-        public string FAULT { get; set; }
-
-
+    
 
         [Required]
         [Display(Name = "Serial No")]

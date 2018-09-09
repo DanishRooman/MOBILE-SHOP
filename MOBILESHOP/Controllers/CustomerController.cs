@@ -4,6 +4,7 @@ using DataTransferObject.Customer;
 using DataTransferObject.mbModel;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -20,7 +21,7 @@ namespace MOBILESHOP.Controllers
         public ActionResult Index()
         {
 
-            return View(); 
+            return View();
         }
         [HttpGet]
         public ActionResult AddCustomer()
@@ -53,6 +54,7 @@ namespace MOBILESHOP.Controllers
         {
             try
             {
+                DateTime submitDate = DateTime.ParseExact(dto.datetime, "MM/dd/yyyy h:mm tt", null);
                 using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
                     if (dto.id == 0)
@@ -76,13 +78,13 @@ namespace MOBILESHOP.Controllers
                             device_imei_number_2 = dto.imei_2,
                             device_model_key = dto.model,
                             device_fault_key = dto.fault,
-                            device_date_submitt = Convert.ToDateTime(dto.datetime),
+                            device_date_submitt = submitDate,
                             device_description = dto.Description,
-                            
+
                         };
                         dbcontext.mbshop_device_detail.Add(device);
                         dbcontext.SaveChanges();
-                        return Json(new { key = true, value = "Customer added successfully", id=device.device_key}, JsonRequestBehavior.AllowGet);
+                        return Json(new { key = true, value = "Customer added successfully", id = device.device_key }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -119,13 +121,46 @@ namespace MOBILESHOP.Controllers
             {
                 try
                 {
+
+                    String paths = Server.MapPath("~/Uploads"); //Path
+
+                    //Check if directory exist
+                    if (!System.IO.Directory.Exists(paths))
+                    {
+                        Directory.CreateDirectory(paths); //Create directory if it doesn't exist
+                    }
+
                     //  Get all files from Request object  
                     HttpFileCollectionBase files = Request.Files;
-                    int devicekey =Convert.ToInt32(Request.Form["deviceKey"]);
+                    int devicekey = Convert.ToInt32(Request.Form["deviceKey"]);
+                    Boolean isCapture = Convert.ToBoolean(Request.Form["iscapture"]);
+
+                    if (isCapture)
+                    {
+                        string base64image = Request.Form["CameraImage"].ToString();
+                        var t = base64image.Substring(23);
+                        var randomFileName = Guid.NewGuid().ToString().Substring(0, 4) + ".png";
+                        string imgPath = Path.Combine(paths, randomFileName);
+                        string filePath = "~/Uploads/" + randomFileName;
+                        byte[] bytes = Convert.FromBase64String(t);
+                        System.IO.File.WriteAllBytes(imgPath, bytes);
+                        using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                        {
+
+                            mb_device_images images = new mb_device_images()
+                            {
+                                device_id = devicekey,
+                                image_path = filePath
+                            };
+                            dbcontext.mb_device_images.Add(images);
+                            dbcontext.SaveChanges();
+
+                        };
+                    }
 
                     for (int i = 0; i < files.Count; i++)
                     {
-                        
+
                         HttpPostedFileBase file = files[i];
                         string fname;
 
@@ -137,7 +172,7 @@ namespace MOBILESHOP.Controllers
                         }
                         else
                         {
-                            fname = file.FileName + Guid.NewGuid();
+                            fname = Guid.NewGuid() + file.FileName;
                         }
                         string filePath = "~/Uploads/" + fname;
                         // Get the complete folder path and store the file inside it.  
@@ -147,18 +182,19 @@ namespace MOBILESHOP.Controllers
                         using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                         {
 
-                            mb_device_images images = new mb_device_images() {
+                            mb_device_images images = new mb_device_images()
+                            {
                                 device_id = devicekey,
                                 image_path = filePath
                             };
                             dbcontext.mb_device_images.Add(images);
                             dbcontext.SaveChanges();
-                        
+
                         };
-                       
 
 
-                        }
+
+                    }
                     // Returns message that successfully uploaded  
                     return Json("File Uploaded Successfully!");
                 }
@@ -177,15 +213,41 @@ namespace MOBILESHOP.Controllers
         {
             using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
             {
-                var row = dbcontext.mbshop_customer_details.Find(id);
+                var row = dbcontext.mbshop_device_detail.Find(id);
                 CustomerDTO dto = new CustomerDTO()
                 {
-                    id = row.customer_id,
-                    Address = row.customer_address,
-                    Email = row.customer_email,
-                    Mobile = row.customer_mobile_number,
-                    Name = row.customer_name
+                    id = row.device_key,
+                    Address = row.mbshop_customer_details.customer_address,
+                    Email = row.mbshop_customer_details.customer_email,
+                    Mobile = row.mbshop_customer_details.customer_mobile_number,
+                    Name = row.mbshop_customer_details.customer_name,
+                    Brand = row.mb_model_detail.mb_brand_detail.brand_key,
+                    model = row.device_model_key,
+                    datetime = row.device_date_submitt.ToString("MM/dd/yyyy h:mm tt"),
+                    Description = row.device_description,
+                    fault = row.device_fault_key,
+                    Serial = row.device_serial_number,
+                    imei_1 = row.device_imei_number_1,
+                    imei_2 = row.device_imei_number_2,
+
                 };
+                dto.brandList = dbcontext.mb_brand_detail.AsEnumerable().Select(x => new BrandDTO
+                {
+                    id = x.brand_key,
+                    BrandName = x.brand_name
+                }).ToList();
+                dto.modelList = dbcontext.mb_model_detail.AsEnumerable().Select(x => new ModelDTO
+                {
+                    id = x.model_key,
+                    modelName = x.model_name
+                }).ToList();
+                dto.faultList = dbcontext.mb_fault_detail.AsEnumerable().Select(x => new DataTransferObject.Fault.FaultDTO
+                {
+                    id = x.fault_key,
+                    faultName = x.fault_name
+                }).ToList();
+
+
                 return View("AddCustomer", dto);
             };
         }
@@ -197,13 +259,13 @@ namespace MOBILESHOP.Controllers
         {
             try
             {
-                List<CustomerDTO> CstmrList = new List<CustomerDTO>();
+                List<CostumerListingDto> CstmrList = new List<CostumerListingDto>();
                 using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
                     CustomerDTO dt = new CustomerDTO();
-                    CstmrList = dbcontext.mbshop_device_detail.AsEnumerable().OrderByDescending(x => x.device_key).Select(x => new CustomerDTO
+                    CstmrList = dbcontext.mbshop_device_detail.AsEnumerable().OrderByDescending(x => x.device_key).Select(x => new CostumerListingDto
                     {
-                        id = x.mbshop_customer_details.customer_id,
+                        id = x.device_key,
                         Name = x.mbshop_customer_details.customer_name,
                         BRAND = x.mb_model_detail.mb_brand_detail.brand_name,
                         MODEL = x.mb_model_detail.model_name,
@@ -229,10 +291,10 @@ namespace MOBILESHOP.Controllers
             {
                 using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
-                    var cstmr = dbcontext.mbshop_customer_details.Find(id);
+                    var cstmr = dbcontext.mbshop_device_detail.Find(id);
                     if (cstmr != null)
                     {
-                        dbcontext.mbshop_customer_details.Remove(cstmr);
+                        dbcontext.mbshop_device_detail.Remove(cstmr);
                         dbcontext.SaveChanges();
                         return Json(new { key = true, value = "Customer deleted successfully" }, JsonRequestBehavior.AllowGet);
                     }

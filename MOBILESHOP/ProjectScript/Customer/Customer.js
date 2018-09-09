@@ -3,7 +3,33 @@
 
     var handleEmptyCustomer = function () {
         $('.form-control').val("");
+    };
 
+    var handleCamera = function () {
+        Webcam.set({
+            width: 320,
+            height: 240,
+            dest_width: 640,
+            dest_height: 480,
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+            force_flash: false
+        });
+        Webcam.attach('#my_camera');
+        $("#captureModal").modal("show");
+    };
+
+    var handleCameraSnap = function () {
+
+        Webcam.snap(function (data_uri) {
+            document.getElementById('my_result').innerHTML = '<img src="' + data_uri + '" class="img img-responsive img-thumbnail" alt="Image" id="imgCaptured"/>';
+        });
+        $("#txtLabel").removeClass("hide");
+    };
+
+    var handleCameraClose = function () {
+        Webcam.reset();
+        $("#captureModal").modal("hide");
     };
 
     var handleSuccessCustomer = function (result) {
@@ -16,17 +42,31 @@
                 showHideTransition: 'slide',
                 icon: 'success'
             });
-            //alert(result.key);
             var deviceKey = result.id;
             if (window.FormData !== undefined) {
+                debugger
                 var fileUpload = $("#fileUpload").get(0);
                 var files = fileUpload.files;
-                // Create FormData object  
+
                 var fileData = new FormData();
+                // Create FormData object  
+                var capturedfile = document.getElementById("imgCaptured").src;
+                if (capturedfile != "http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image")
+                {
+                    fileData.append("CameraImage", capturedfile);
+                    fileData.append("iscapture", true);
+                }
+                else
+                {
+                    fileData.append("iscapture", false);
+                }
+ 
                 for (var i = 0; i < files.length; i++) {
                     fileData.append(files[i].name, files[i]);
                 }
+
                 fileData.append('deviceKey', deviceKey);
+
                 $.ajax({
                     url: '/Customer/UploadFiles',
                     type: "POST",
@@ -73,7 +113,7 @@
         });
 
     };
-    handleDeleteCustomer = function (id) {
+    var handleDeleteCustomer = function (id) {
 
         $.confirm({
             title: 'Delete Group',
@@ -135,8 +175,15 @@
         initDeleteCustomer: function (id) {
             handleDeleteCustomer(id);
         },
-
-
+        initCamera: function () {
+            handleCamera();
+        },
+        initCameraSnap: function () {
+            handleCameraSnap();
+        },
+        initCameraClose: function () {
+            handleCameraClose();
+        },
     };
 
 

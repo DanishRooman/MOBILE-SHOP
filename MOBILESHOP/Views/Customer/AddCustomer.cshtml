@@ -2,7 +2,7 @@
 @Scripts.Render("~/Script/unobstrasive")
 @Scripts.Render("~/Script/unobtrusive-script")
 @{
-    ViewBag.Title = "AddCustomer";
+    ViewBag.Title = "Customer Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -112,6 +112,11 @@
             </div>
         </div>
         <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="Javascript:void(0);" onclick="Customer.initCamera();" class="btn btn-danger"> <span class="glyphicon glyphicon-camera"></span> Capture Images</a>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10 text-right">
                 <a href="/Customer/Index" class="btn btn-default" style="width:10%">Back</a>
                 <input type="submit" value="Save" class="btn btn-primary" style="width:10%" />
@@ -119,6 +124,41 @@
         </div>
     </div>
 }
+
+
+<div id="captureModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Capture</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="fileupload-new thumbnail" id="my_camera" style="width:320px; height:240px;">
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="fileupload-new thumbnail" id="my_result">
+                            <img class="img img-responsive img-thumbnail" style="width: 100%; height:100%" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="Image" id="imgCaptured">
+                        </div>
+                        <span id="txtLabel" class="text-primary hide">Image Saved</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="Customer.initCameraSnap();">Capture</button>
+                <button type="button" class="btn btn-default" onclick="Customer.initCameraClose();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/assets/webcam.js"></script>
 <script src="~/ProjectScript/Customer/Customer.js"></script>
 <script type="text/javascript">
     $(function () {

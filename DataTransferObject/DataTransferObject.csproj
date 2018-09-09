@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Brand\BrandDTO.cs" />
+    <Compile Include="Customer\CostumerListingDto.cs" />
     <Compile Include="Customer\CustomerDTO.cs" />
     <Compile Include="Fault\FaultDTO.cs" />
     <Compile Include="mbModel\ModelDTO.cs" />
