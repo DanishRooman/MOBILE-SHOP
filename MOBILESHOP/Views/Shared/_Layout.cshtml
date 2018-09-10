@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -17,40 +18,47 @@
 </head>
 <body>
 
+
+
     <!-- Header Starts -->
     <div class="navbar-wrapper">
         @*<div class="navbar-inverse" role="navigation">*@
         <div class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0; background-color:#3e2723; border-color:#3e2723;">
             <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("MOBILE STORE", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                Manage
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Brand", "Index", "Brand")</li>
-                                <li>@Html.ActionLink("Fault", "Index", "Fault")</li>
-                                <li>@Html.ActionLink("Model", "Index", "Model")</li>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            @Html.ActionLink("MOBILE STORE", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        Manage
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Brand", "Index", "Brand")</li>
+                                        <li>@Html.ActionLink("Fault", "Index", "Fault")</li>
+                                        <li>@Html.ActionLink("Model", "Index", "Model")</li>
+                                    </ul>
+                                </li>
+                                <li>@Html.ActionLink("Customer", "Index", "Customer")</li>
+                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                             </ul>
-                        </li>
-                        <li>@Html.ActionLink("Customer", "Index", "Customer")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                        <!----#Nav Ends -->
+                    </div>
                 </div>
-                <!----#Nav Ends -->
             </div>
         </div>
     </div>
@@ -58,11 +66,14 @@
     <div class="container">
         <!-- Header Starts -->
         <div class="row">
-            <div class="header col-lg-offset-2 col-md-10">
-                <br />
-                <a href="default.aspx"><img src="~/images/logo1.png" alt="Dream House logo" width="100%"></a>
-            
-                <br />
+            <div class="col-md-12">
+                @*<div class="header col-lg-offset-2 col-md-10">*@
+                <div class="header col-md-12">
+                    <br />
+                    <a href="default.aspx"><img src="~/images/logo1.png" alt="Dream House logo" style="width:100%;"></a>
+
+                    <br />
+                </div>
             </div>
         </div>
 
@@ -76,12 +87,10 @@
         <br />
         <br />
     </div>
-    <div class="footer text-center" style="bottom:0!important;position: fixed; width: 100%; height:50px !important;">
-
-        <div class="row">
-            ( الحقوق محفوظة لـ(  <a href="http://bariq-tech.com">بريق التكنولوجيا</a> )
-        </div>
+    <div class="footer text-center" style="bottom:0!important;position: fixed; width:100%; height:50px !important;">
+        ( الحقوق محفوظة لـ(  <a href="http://bariq-tech.com">بريق التكنولوجيا</a> )
     </div>
+    
     @Scripts.Render("~/bundles/Toast-and-Confirm")
     @Scripts.Render("~/bundles/script")
     @Scripts.Render("~/bundles/owl.carousel")

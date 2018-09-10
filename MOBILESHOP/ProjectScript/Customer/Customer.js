@@ -51,16 +51,14 @@
                 var fileData = new FormData();
                 // Create FormData object  
                 var capturedfile = document.getElementById("imgCaptured").src;
-                if (capturedfile != "http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image")
-                {
+                if (capturedfile != "http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image") {
                     fileData.append("CameraImage", capturedfile);
                     fileData.append("iscapture", true);
                 }
-                else
-                {
+                else {
                     fileData.append("iscapture", false);
                 }
- 
+
                 for (var i = 0; i < files.length; i++) {
                     fileData.append(files[i].name, files[i]);
                 }
@@ -160,6 +158,27 @@
             }
         });
     };
+    var handleSignatureModel = function () {
+        $("#CustomerSignature").empty();
+        var htmldiv = "<div id='signatureCustomer'><div id='signature'></div></div>";
+        $("#CustomerSignature").html(htmldiv);
+        $("#signatureModel").modal("show");
+      
+        $("#signatureCustomer").jSignature({
+
+            "destroy": true,
+            "reset": true,
+            "clear": true,
+            "UndoButton": true,
+
+            "color": "#000",
+            "lineWidth": 5,
+            "width":500,
+            "height": 200,
+            "background-color": "#0ff"
+        });
+
+    };
     //public Static
     return {
 
@@ -183,6 +202,9 @@
         },
         initCameraClose: function () {
             handleCameraClose();
+        },
+        initSignatureModel: function () {
+            handleSignatureModel();
         },
     };
 
