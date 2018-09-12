@@ -51,16 +51,16 @@ namespace DataTransferObject.Customer
         public int fault { get; set; }
         public List<FaultDTO> faultList { get; set; }
         [Required]
-        [Display(Name = "Date")]
+        [Display(Name = "Submitted Date")]
         public string datetime { get; set; }
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
         [Required]
-        [Display(Name ="Repairing Cost")]
+        [Display(Name ="Total Repairing Cost")]
         public string repairingCost { get; set; }
         [Required]
-        [Display(Name ="Delivery Date")]
+        [Display(Name ="Deliver Date")]
         public string deliverDate { get; set; }
         [Required]
         [Display(Name ="Customer Signature")]

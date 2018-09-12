@@ -63,6 +63,9 @@
     <Compile Include="DBContext\AspNetUsers.cs">
       <DependentUpon>MOBILESHOP.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\Costumer_Device_Services.cs">
+      <DependentUpon>MOBILESHOP.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\C__MigrationHistory.cs">
       <DependentUpon>MOBILESHOP.tt</DependentUpon>
     </Compile>

@@ -30,6 +30,7 @@ namespace DataAccessLayer.DBContext
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<Costumer_Device_Services> Costumer_Device_Services { get; set; }
         public virtual DbSet<mb_brand_detail> mb_brand_detail { get; set; }
         public virtual DbSet<mb_device_images> mb_device_images { get; set; }
         public virtual DbSet<mb_fault_detail> mb_fault_detail { get; set; }

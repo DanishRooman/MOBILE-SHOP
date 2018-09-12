@@ -66,6 +66,14 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="Costumer_Device_Services">
+          <Key>
+            <PropertyRef Name="cds_key" />
+          </Key>
+          <Property Name="cds_key" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cds_service_key" Type="int" Nullable="false" />
+          <Property Name="cds_device_key" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="mb_brand_detail">
           <Key>
             <PropertyRef Name="brand_key" />
@@ -131,6 +139,34 @@
           <Property Name="service_name" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="service_charges" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Costumer_Device_Services_mbshop_device_detail">
+          <End Role="mbshop_device_detail" Type="Self.mbshop_device_detail" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Costumer_Device_Services" Type="Self.Costumer_Device_Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mbshop_device_detail">
+              <PropertyRef Name="device_key" />
+            </Principal>
+            <Dependent Role="Costumer_Device_Services">
+              <PropertyRef Name="cds_device_key" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Costumer_Device_Services_mbshop_service_detail">
+          <End Role="mbshop_service_detail" Type="Self.mbshop_service_detail" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Costumer_Device_Services" Type="Self.Costumer_Device_Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mbshop_service_detail">
+              <PropertyRef Name="service_key" />
+            </Principal>
+            <Dependent Role="Costumer_Device_Services">
+              <PropertyRef Name="cds_service_key" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -264,6 +300,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Costumer_Device_Services" EntityType="Self.Costumer_Device_Services" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="mb_brand_detail" EntityType="Self.mb_brand_detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="mb_device_images" EntityType="Self.mb_device_images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="mb_fault_detail" EntityType="Self.mb_fault_detail" Schema="dbo" store:Type="Tables" />
@@ -271,6 +308,14 @@
           <EntitySet Name="mbshop_customer_details" EntityType="Self.mbshop_customer_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="mbshop_device_detail" EntityType="Self.mbshop_device_detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="mbshop_service_detail" EntityType="Self.mbshop_service_detail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Costumer_Device_Services_mbshop_device_detail" Association="Self.FK_Costumer_Device_Services_mbshop_device_detail">
+            <End Role="mbshop_device_detail" EntitySet="mbshop_device_detail" />
+            <End Role="Costumer_Device_Services" EntitySet="Costumer_Device_Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Costumer_Device_Services_mbshop_service_detail" Association="Self.FK_Costumer_Device_Services_mbshop_service_detail">
+            <End Role="mbshop_service_detail" EntitySet="mbshop_service_detail" />
+            <End Role="Costumer_Device_Services" EntitySet="Costumer_Device_Services" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -318,6 +363,7 @@
           <EntitySet Name="AspNetUserClaims" EntityType="MOBILESHOPModel.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="MOBILESHOPModel.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="MOBILESHOPModel.AspNetUsers" />
+          <EntitySet Name="Costumer_Device_Services" EntityType="MOBILESHOPModel.Costumer_Device_Services" />
           <EntitySet Name="mb_brand_detail" EntityType="MOBILESHOPModel.mb_brand_detail" />
           <EntitySet Name="mb_device_images" EntityType="MOBILESHOPModel.mb_device_images" />
           <EntitySet Name="mb_fault_detail" EntityType="MOBILESHOPModel.mb_fault_detail" />
@@ -332,6 +378,14 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="MOBILESHOPModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Costumer_Device_Services_mbshop_device_detail" Association="MOBILESHOPModel.FK_Costumer_Device_Services_mbshop_device_detail">
+            <End Role="mbshop_device_detail" EntitySet="mbshop_device_detail" />
+            <End Role="Costumer_Device_Services" EntitySet="Costumer_Device_Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Costumer_Device_Services_mbshop_service_detail" Association="MOBILESHOPModel.FK_Costumer_Device_Services_mbshop_service_detail">
+            <End Role="mbshop_service_detail" EntitySet="mbshop_service_detail" />
+            <End Role="Costumer_Device_Services" EntitySet="Costumer_Device_Services" />
           </AssociationSet>
           <AssociationSet Name="FK_mb_model_detail_mb_brand_detail1" Association="MOBILESHOPModel.FK_mb_model_detail_mb_brand_detail1">
             <End Role="mb_brand_detail" EntitySet="mb_brand_detail" />
@@ -417,6 +471,16 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="MOBILESHOPModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="MOBILESHOPModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
+        <EntityType Name="Costumer_Device_Services">
+          <Key>
+            <PropertyRef Name="cds_key" />
+          </Key>
+          <Property Name="cds_key" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cds_service_key" Type="Int32" Nullable="false" />
+          <Property Name="cds_device_key" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="mbshop_device_detail" Relationship="MOBILESHOPModel.FK_Costumer_Device_Services_mbshop_device_detail" FromRole="Costumer_Device_Services" ToRole="mbshop_device_detail" />
+          <NavigationProperty Name="mbshop_service_detail" Relationship="MOBILESHOPModel.FK_Costumer_Device_Services_mbshop_service_detail" FromRole="Costumer_Device_Services" ToRole="mbshop_service_detail" />
+        </EntityType>
         <EntityType Name="mb_brand_detail">
           <Key>
             <PropertyRef Name="brand_key" />
@@ -479,6 +543,7 @@
           <Property Name="device_repairing_cost" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="device_deliver_date" Type="DateTime" Precision="3" />
           <Property Name="device_customer_signature" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Costumer_Device_Services" Relationship="MOBILESHOPModel.FK_Costumer_Device_Services_mbshop_device_detail" FromRole="mbshop_device_detail" ToRole="Costumer_Device_Services" />
           <NavigationProperty Name="mb_device_images" Relationship="MOBILESHOPModel.FK_mb_device_images_mbshop_device_detail" FromRole="mbshop_device_detail" ToRole="mb_device_images" />
           <NavigationProperty Name="mb_fault_detail" Relationship="MOBILESHOPModel.FK_mbshop_device_detail_mb_fault_detail" FromRole="mbshop_device_detail" ToRole="mb_fault_detail" />
           <NavigationProperty Name="mb_model_detail" Relationship="MOBILESHOPModel.FK_mbshop_device_detail_mb_model_detail" FromRole="mbshop_device_detail" ToRole="mb_model_detail" />
@@ -491,6 +556,7 @@
           <Property Name="service_key" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="service_name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="service_charges" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Costumer_Device_Services" Relationship="MOBILESHOPModel.FK_Costumer_Device_Services_mbshop_service_detail" FromRole="mbshop_service_detail" ToRole="Costumer_Device_Services" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="MOBILESHOPModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -517,6 +583,34 @@
             </Principal>
             <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Costumer_Device_Services_mbshop_device_detail">
+          <End Type="MOBILESHOPModel.mbshop_device_detail" Role="mbshop_device_detail" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MOBILESHOPModel.Costumer_Device_Services" Role="Costumer_Device_Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mbshop_device_detail">
+              <PropertyRef Name="device_key" />
+            </Principal>
+            <Dependent Role="Costumer_Device_Services">
+              <PropertyRef Name="cds_device_key" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Costumer_Device_Services_mbshop_service_detail">
+          <End Type="MOBILESHOPModel.mbshop_service_detail" Role="mbshop_service_detail" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MOBILESHOPModel.Costumer_Device_Services" Role="Costumer_Device_Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mbshop_service_detail">
+              <PropertyRef Name="service_key" />
+            </Principal>
+            <Dependent Role="Costumer_Device_Services">
+              <PropertyRef Name="cds_service_key" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -652,6 +746,15 @@
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Costumer_Device_Services">
+            <EntityTypeMapping TypeName="MOBILESHOPModel.Costumer_Device_Services">
+              <MappingFragment StoreEntitySet="Costumer_Device_Services">
+                <ScalarProperty Name="cds_device_key" ColumnName="cds_device_key" />
+                <ScalarProperty Name="cds_service_key" ColumnName="cds_service_key" />
+                <ScalarProperty Name="cds_key" ColumnName="cds_key" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

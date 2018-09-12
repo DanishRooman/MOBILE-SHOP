@@ -14,8 +14,17 @@ namespace DataAccessLayer.DBContext
     
     public partial class mbshop_service_detail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public mbshop_service_detail()
+        {
+            this.Costumer_Device_Services = new HashSet<Costumer_Device_Services>();
+        }
+    
         public int service_key { get; set; }
         public string service_name { get; set; }
         public string service_charges { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Costumer_Device_Services> Costumer_Device_Services { get; set; }
     }
 }

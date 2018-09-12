@@ -17,6 +17,7 @@ namespace DataAccessLayer.DBContext
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public mbshop_device_detail()
         {
+            this.Costumer_Device_Services = new HashSet<Costumer_Device_Services>();
             this.mb_device_images = new HashSet<mb_device_images>();
         }
     
@@ -33,6 +34,8 @@ namespace DataAccessLayer.DBContext
         public Nullable<System.DateTime> device_deliver_date { get; set; }
         public string device_customer_signature { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Costumer_Device_Services> Costumer_Device_Services { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<mb_device_images> mb_device_images { get; set; }
         public virtual mb_fault_detail mb_fault_detail { get; set; }

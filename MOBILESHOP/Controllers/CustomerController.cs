@@ -43,6 +43,12 @@ namespace MOBILESHOP.Controllers
                     id = x.fault_key,
                     faultName = x.fault_name
                 }).ToList();
+                ViewBag.servicesList = dbcontext.mbshop_service_detail.AsEnumerable().Select(x => new DataTransferObject.Services.ServiceDTO
+                {
+                    id = x.service_key,
+                    serviceName = x.service_name,
+                    serviceCharges = x.service_charges,
+                }).ToList();
             };
 
             return View("AddCustomer", dt);
@@ -54,6 +60,7 @@ namespace MOBILESHOP.Controllers
             try
             {
                 DateTime submitDate = DateTime.ParseExact(dto.datetime, "MM/dd/yyyy h:mm tt", null);
+                DateTime deliverDate = DateTime.ParseExact(dto.datetime, "MM/dd/yyyy h:mm tt", null);
                 using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
                     if (dto.id == 0)
@@ -79,6 +86,9 @@ namespace MOBILESHOP.Controllers
                             device_fault_key = dto.fault,
                             device_date_submitt = submitDate,
                             device_description = dto.Description,
+                            device_deliver_date = deliverDate,
+                            device_repairing_cost = dto.repairingCost,
+
 
                         };
                         dbcontext.mbshop_device_detail.Add(device);
