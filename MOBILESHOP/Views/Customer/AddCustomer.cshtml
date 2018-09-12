@@ -128,11 +128,11 @@
         <div class="form-group hide">
             @Html.LabelFor(model => model.customerSignature, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.customerSignature, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.customerSignature, new { htmlAttributes = new { @class = "form-control", @id = "txtSignature" } })
                 @Html.ValidationMessageFor(model => model.customerSignature, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             <label class="control-label col-md-2">Images</label>
             <div class="col-md-10">
@@ -144,11 +144,19 @@
                 <a href="Javascript:void(0);" onclick="Customer.initCamera();" class="btn btn-danger"> <span class="glyphicon glyphicon-camera"></span> Capture Images</a>
             </div>
         </div>
+      
+        <div class="form-group" id="sigantureDiv">
+            <label class="control-label col-md-2">Costumer Signature</label>
+            <div class="col-md-10">
+                <img class="img img-thumbnail" src="~/images/300px-No_image_available.svg (1).png" id="signatureImg" alt="Siganture" />
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <a href="Javascript:void(0);" onclick="Customer.initSignatureModel();" class="btn btn-success">Customer Signature</a>
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10 text-right">
                 <a href="/Customer/Index" class="btn btn-default" style="width:10%">Back</a>
@@ -163,7 +171,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Signature</h4>
+                <h4 class="modal-title">Costumer Signature</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -173,10 +181,12 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="Customer.initSignatureReset();">Reset</button>
+                <button type="button" class="btn btn-primary" onclick="Customer.initSignatureSave();">Save and Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>
 
@@ -223,8 +233,8 @@
             width: '100%'
         });
         $('.datepicker ').datetimepicker();
-       
-       
+
+
     });
 </script>
 

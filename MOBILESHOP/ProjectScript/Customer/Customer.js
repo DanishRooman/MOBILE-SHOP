@@ -162,8 +162,12 @@
         $("#CustomerSignature").empty();
         var htmldiv = "<div id='signatureCustomer'><div id='signature'></div></div>";
         $("#CustomerSignature").html(htmldiv);
+        $('#signatureModel').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
         $("#signatureModel").modal("show");
-      
+
         $("#signatureCustomer").jSignature({
 
             "destroy": true,
@@ -173,11 +177,20 @@
 
             "color": "#000",
             "lineWidth": 4,
-            "width":250,
+            "width": 250,
             "height": 200,
             "background-color": "#edf6e9"
         });
 
+    };
+    var handleSignatureReset = function () {
+        $("#signatureCustomer").jSignature('reset');
+    };
+    var handleSignatureSave = function () {
+        var rawdata = $("#signatureCustomer").jSignature('getData', "default");
+        $("#txtSignature").val(rawdata);
+        $("#signatureImg").attr("src", rawdata);
+        $("#signatureModel").modal("hide");
     };
     //public Static
     return {
@@ -205,6 +218,12 @@
         },
         initSignatureModel: function () {
             handleSignatureModel();
+        },
+        initSignatureReset: function () {
+            handleSignatureReset();
+        },
+        initSignatureSave: function () {
+            handleSignatureSave();
         },
     };
 
