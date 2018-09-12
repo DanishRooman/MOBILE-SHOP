@@ -172,10 +172,10 @@
             "UndoButton": true,
 
             "color": "#000",
-            "lineWidth": 5,
-            "width":500,
+            "lineWidth": 4,
+            "width":250,
             "height": 200,
-            "background-color": "#0ff"
+            "background-color": "#edf6e9"
         });
 
     };
