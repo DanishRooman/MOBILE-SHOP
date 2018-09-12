@@ -56,5 +56,14 @@ namespace DataTransferObject.Customer
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
+        [Required]
+        [Display(Name ="Repairing Cost")]
+        public string repairingCost { get; set; }
+        [Required]
+        [Display(Name ="Delivery Date")]
+        public string deliverDate { get; set; }
+        [Required]
+        [Display(Name ="Customer Signature")]
+        public string customerSignature { get; set; }
     }
 }

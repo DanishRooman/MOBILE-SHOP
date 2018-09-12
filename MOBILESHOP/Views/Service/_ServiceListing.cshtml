@@ -1,0 +1,55 @@
+﻿@model IEnumerable<DataTransferObject.Services.ServiceDTO>
+
+
+<table class="table table-bordered table-hover table-striped" id="tblService">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.serviceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.serviceCharges)
+            </th>
+
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.serviceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.serviceCharges)
+                </td>
+               
+               
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                    <a href="javascript:void(0);" title="Edit Service" onclick="Service.initEditService(@item.id);">Edit</a> |
+                    <a href="javascript:void(0);" title="Delete Service" onclick="Service.initDeleteService(@item.id);">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#tblService').DataTable({
+            aaSorting: []
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+

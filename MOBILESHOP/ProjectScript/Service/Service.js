@@ -1,25 +1,30 @@
-﻿var Fault = function () {
-    var handleCreateFault = function () {
-        //Ajax call
+﻿var Service = function () {
+    var hadleCreateService = function () {
+
         $.ajax({
-            url: '/Fault/AddFault',
+            url: '/Service/AddService',
             type: 'GET',
             dataType: 'HTML',
             data: {},
             success: function (result) {
-                $("#CreateFault").empty();
-                $("#CreateFault").html(result);
-                $("#FaultTitle").text("Add Mobile Fault");
-                $("#CreateFault").modal("show");
+                $("#CreateService").empty();
+                $("#CreateService").html(result);
+                $("#ServiceTitle").text("Add Mobile Service");
+                $("#CreateService").modal("show");
             },
             error: function () {
                 console.log("Error");
             }
         });
 
-    };
-    var handleSuccessFault = function (result) {
 
+    };
+    var handleEmptyService = function () {
+        $('.form-control').val("");
+    };
+
+    var handleSuccessService = function (result) {
+        debugger
         if (result.key) {
 
             $.toast({
@@ -28,8 +33,8 @@
                 showHideTransition: 'slide',
                 icon: 'success'
             });
-            handleFaultList();
-            handleEmptyFault();
+            handleEmptyService();
+            handleServiceList();
         }
         else {
             $.toast({
@@ -41,28 +46,26 @@
         }
 
     };
-    var handleFaultList = function () {
+    var handleServiceList = function () {
         $.ajax({
-            url: '/Fault/FaultListing',
+            url: '/Service/ServiceListing',
             type: 'GET',
             dataType: 'HTML',
             data: {},
             success: function (result) {
-                $("#divFault").empty();
-                $("#divFault").html(result);
+                $("#divService").empty();
+                $("#divService").html(result);
             },
             error: function () {
                 console.log("Error");
             }
         });
+
     };
-    var handleEmptyFault = function () {
-        $('.form-control').val("");
-    };
-    var handleDeleteFault = function (id) {
+    var handleDeleteService = function (id) {
         $.confirm({
-            title: 'Delete Fault',
-            content: 'Are you sure you want to delete this Fault?',
+            title: 'Delete Service',
+            content: 'Are you sure you want to delete this Service?',
             theme: 'material',
             buttons: {
                 confirm: {
@@ -70,7 +73,7 @@
                     keys: ["enter"],
                     action: function () {
                         $.ajax({
-                            url: '/Fault/DeleteFault',
+                            url: '/Service/DeleteService',
                             type: 'GET',
                             dataType: 'json',
                             data: { "id": id },
@@ -82,7 +85,7 @@
                                         showHideTransition: 'slide',
                                         icon: 'success'
                                     });
-                                    handleFaultList();
+                                    handleServiceList();
                                 }
                                 else {
                                     $.toast({
@@ -104,42 +107,43 @@
                 },
             }
         });
-
     };
-    var handleUpdateFault = function (id) {
-       
+    var handleEditService = function (id) {
         $.ajax({
-            url: '/Fault/UpdateFault',
+            url: '/Service/EditService',
             type: 'GET',
             dataType: 'HTML',
             data: { "id": id },
             success: function (result) {
-                $("#CreateFault").empty();
-                $("#CreateFault").html(result);
-                $("#FaultTitle").text("Update Mobile Fault");
-                $("#CreateFault").modal("show");
+                $("#CreateService").empty();
+                $("#CreateService").html(result);
+                $("#ServiceTitle").text("Update Mobile Service");
+                $("#CreateService").modal("show");
             },
             error: function () {
                 console.log("Error");
             }
         });
-
     };
     return {
-        initCreateFault: function () {
-            handleCreateFault();
+        initCreateService: function () {
+            hadleCreateService();
         },
-        initSuccessFault: function (result) {
-            handleSuccessFault(result);
+        initCreateSuccess: function (result) {
+            handleSuccessService(result);
         },
-        initFaultList: function () {
-            handleFaultList();
+        initServiceList: function () {
+            handleServiceList();
         },
-        initDeleteFault: function (id) {
-            handleDeleteFault(id);
+        initDeleteService: function (id) {
+            handleDeleteService(id)
         },
-        initUpdateFault: function (id) {
-            handleUpdateFault(id);
+        initEditService: function (id) {
+            handleEditService(id);
         },
+
     };
+
+
+
 }();

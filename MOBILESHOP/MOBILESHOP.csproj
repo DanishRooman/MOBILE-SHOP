@@ -205,6 +205,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MOBILESHOPEnteties.cs" />
     <Compile Include="Controllers\ModelController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -261,6 +262,7 @@
     <Content Include="ProjectScript\Customer\Customer.js" />
     <Content Include="ProjectScript\Fault\Fault.js" />
     <Content Include="ProjectScript\Model\Model.js" />
+    <Content Include="ProjectScript\Service\Service.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -353,6 +355,9 @@
     <Content Include="Views\Fault\AddFault.cshtml" />
     <Content Include="Views\Model\Index.cshtml" />
     <Content Include="Views\Customer\EditCostumer.cshtml" />
+    <Content Include="Views\Service\Index.cshtml" />
+    <Content Include="Views\Service\AddService.cshtml" />
+    <Content Include="Views\Service\_ServiceListing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

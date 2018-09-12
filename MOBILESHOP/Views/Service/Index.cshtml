@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Mobile Service Details</h2>
+        <button type="button" class="btn btn-primary" onclick="Service.initCreateService();">Add Service</button>
+        <br /><br />
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Mobile Service Details
+                <div class="pull-right">
+
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div id="divService">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="CreateService" class="modal fade" role="dialog">
+
+</div>
+<script src="~/ProjectScript/Service/Service.js"></script>
+<script type="text/javascript">
+     $(function () {
+         Service.initServiceList();
+    });
+</script>
