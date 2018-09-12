@@ -113,7 +113,7 @@
             </div>
         </div>
 
-     
+
         <div class="form-group">
             @Html.LabelFor(model => model.deliverDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -164,19 +164,17 @@
                 <select id="source"
                         data-text="Survices Available"
                         data-search="Search for Services">
-
-                   
-
                     @foreach (var item in (List<DataTransferObject.Services.ServiceDTO>)ViewBag.servicesList)
                     {
-                        <option value="@item.id">@(item.serviceName +" --- "+ item.serviceCharges )</option>
+                        <option value="@item.id">@(item.serviceName + " --- " + item.serviceCharges )</option>
 
                     }
-
                 </select>
                 <select id="destination"
                         data-text="Services Selected"
-                        data-search="Search for Services"></select>
+                        data-search="Search for Services">
+
+                </select>
             </div>
         </div>
         <div class="form-group">
@@ -254,6 +252,7 @@
         $('.select2').select2({
             width: '100%'
         });
+
         $('.datepicker ').datetimepicker();
         //multiList
         $('#source, #destination').listswap({

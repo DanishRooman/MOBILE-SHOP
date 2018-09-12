@@ -82,7 +82,7 @@
             else {
                 alert("Form data not supported by browser");
             }
-
+            handleSaveServices(deviceKey);
             handleEmptyCustomer();
         }
         else {
@@ -191,6 +191,22 @@
         $("#txtSignature").val(rawdata);
         $("#signatureImg").attr("src", rawdata);
         $("#signatureModel").modal("hide");
+    };
+    var handleSaveServices = function (deviceKey) {
+        var services = [];
+        $("#destination").find("option").each(function () {
+            var id = $(this).val();
+            services.push(id);
+        });
+        $.ajax({
+            type: "POST",
+            url: "/Customer/SaveServices",
+            data: { "deviceId": deviceKey, "servicesId": services },
+            traditional: true,
+            dataType: "json",
+            success: function () { },
+            failure: function () {  }
+        });
     };
     //public Static
     return {

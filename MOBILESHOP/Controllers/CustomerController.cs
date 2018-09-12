@@ -326,6 +326,34 @@ namespace MOBILESHOP.Controllers
             }
 
         }
+
+
+        public ActionResult SaveServices(int deviceId, string[] servicesId)
+        {
+            try
+            {
+                using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                {
+                    foreach(var item in servicesId)
+                    {
+                        int serviceKey = Convert.ToInt32(item);
+                        Costumer_Device_Services service = new Costumer_Device_Services()
+                        {
+                            cds_service_key = serviceKey,
+                            cds_device_key = deviceId,
+                        };
+                        dbcontext.Costumer_Device_Services.Add(service);
+                    }
+                    return Json(new { key = true, value = "Services added successfully" }, JsonRequestBehavior.AllowGet);
+                };
+            }
+            catch (Exception ex)
+            {
+                return Json(new { key = false, value = "Unable to process your request please contact to your admin." }, JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
     }
 
 
