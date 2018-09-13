@@ -78,7 +78,7 @@ namespace MOBILESHOP.Controllers
                 {
                     using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                     {
-                        mbshop_service_detail mbservice = new mbshop_service_detail()
+                        mbshop_customer_details mbservice = new mbshop_customer_details()
                         {
                             service_name = dto.serviceName,
                             service_charges = dto.serviceCharges

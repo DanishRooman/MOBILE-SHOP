@@ -236,6 +236,7 @@
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CustomerDetailTable.css" />
     <Content Include="Content\dataTables.bootstrap.min.css" />
     <Content Include="Content\jquery-confirm.css" />
     <Content Include="Content\jquery.toast.min.css" />
@@ -361,6 +362,7 @@
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\AddService.cshtml" />
     <Content Include="Views\Service\_ServiceListing.cshtml" />
+    <Content Include="Views\Customer\CustomerDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

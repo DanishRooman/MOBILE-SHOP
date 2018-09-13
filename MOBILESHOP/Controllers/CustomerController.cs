@@ -15,6 +15,7 @@ namespace MOBILESHOP.Controllers
     [Authorize]
     public class CustomerController : Controller
     {
+        public object dto { get; private set; }
 
         // GET: Customer
         public ActionResult Index()
@@ -22,6 +23,13 @@ namespace MOBILESHOP.Controllers
 
             return View();
         }
+
+        public ActionResult CustomerDetail()
+        {
+            CustomerDTO dto = new CustomerDTO();
+            return View("CustomerDetail", dto);
+        }
+
         [HttpGet]
         public ActionResult AddCustomer()
         {
@@ -76,7 +84,7 @@ namespace MOBILESHOP.Controllers
                         dbcontext.mbshop_customer_details.Add(mbshop);
                         dbcontext.SaveChanges();
                         int costmerID = mbshop.customer_id;
-                        mbshop_device_detail device = new mbshop_device_detail()
+                        mbshop_customer_details device = new mbshop_customer_details()
                         {
                             device_costumer = costmerID,
                             device_serial_number = dto.Serial,
@@ -334,7 +342,7 @@ namespace MOBILESHOP.Controllers
             {
                 using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
-                    foreach(var item in servicesId)
+                    foreach (var item in servicesId)
                     {
                         int serviceKey = Convert.ToInt32(item);
                         Costumer_Device_Services service = new Costumer_Device_Services()
