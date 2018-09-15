@@ -45,6 +45,7 @@
     <Compile Include="Customer\CostumerListingDto.cs" />
     <Compile Include="Customer\CustomerDTO.cs" />
     <Compile Include="Customer\DeviceImagesDTO.cs" />
+    <Compile Include="Customer_Device_Services\Customer_Device_ServicesDTO.cs" />
     <Compile Include="Fault\FaultDTO.cs" />
     <Compile Include="mbModel\ModelDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

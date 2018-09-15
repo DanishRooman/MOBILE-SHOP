@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.DBContext;
 using DataTransferObject.Brand;
 using DataTransferObject.Customer;
+using DataTransferObject.Customer_Device_Services;
 using DataTransferObject.mbModel;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,34 @@ namespace MOBILESHOP.Controllers
 
             return View();
         }
-
-        public ActionResult CustomerDetail()
+        [HttpGet]
+        public ActionResult Customer_Device_Detail(int id)
         {
-            CustomerDTO dto = new CustomerDTO();
-            return View("CustomerDetail", dto);
+            Customer_Device_ServicesDTO dto = new Customer_Device_ServicesDTO();
+            using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+            {
+
+                var cstmr = dbcontext.mbshop_device_detail.Find(id);
+                if (cstmr != null)
+                {
+                    dto.customerName = cstmr.mbshop_customer_details.customer_name;
+                    dto.Address = cstmr.mbshop_customer_details.customer_address;
+                    dto.Email = cstmr.mbshop_customer_details.customer_email;
+                    dto.PhonNumber = cstmr.mbshop_customer_details.customer_mobile_number;
+                    dto.Imei_1 = cstmr.device_imei_number_1;
+                    dto.Imei_2 = cstmr.device_imei_number_2;
+                    dto.Brand = cstmr.mb_model_detail.mb_brand_detail.brand_name;
+                    dto.Model = cstmr.mb_model_detail.model_name;
+                    dto.Fault = cstmr.mb_fault_detail.fault_name;
+                    dto.SubmittDate = cstmr.device_date_submitt.ToString("MM/dd/yyyy h:mm tt");
+                    dto.RepairingCost = cstmr.device_repairing_cost;
+                    dto.DeliverDate = Convert.ToDateTime(cstmr.device_deliver_date).ToString("MM/dd/yyyy h:mm tt");
+                    dto.CustomerSignature = cstmr.device_customer_signature;
+
+                }
+            };
+            return View("Customer_Device_Detail", dto);
+
         }
 
         [HttpGet]
@@ -84,7 +108,7 @@ namespace MOBILESHOP.Controllers
                         dbcontext.mbshop_customer_details.Add(mbshop);
                         dbcontext.SaveChanges();
                         int costmerID = mbshop.customer_id;
-                        mbshop_customer_details device = new mbshop_customer_details()
+                        mbshop_device_detail device = new mbshop_device_detail()
                         {
                             device_costumer = costmerID,
                             device_serial_number = dto.Serial,
@@ -96,6 +120,7 @@ namespace MOBILESHOP.Controllers
                             device_description = dto.Description,
                             device_deliver_date = deliverDate,
                             device_repairing_cost = dto.repairingCost,
+                            device_customer_signature = dto.customerSignature,
 
 
                         };

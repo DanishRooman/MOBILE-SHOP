@@ -200,6 +200,8 @@
     <Compile Include="Controllers\AouthrizeAttribute.cs" />
     <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\Customer_Device_Detail.cs" />
+    <Compile Include="Controllers\Customer_Device_Service.cs" />
     <Compile Include="Controllers\FaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -362,7 +364,7 @@
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\AddService.cshtml" />
     <Content Include="Views\Service\_ServiceListing.cshtml" />
-    <Content Include="Views\Customer\CustomerDetail.cshtml" />
+    <Content Include="Views\Customer\Customer_Device_Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
