@@ -32,6 +32,7 @@ namespace DataTransferObject.Customer_Device_Services
         public string Model { get; set; }
         [Display(Name ="Fault")]
         public string Fault { get; set; }
+       
         [Display(Name ="Submit Date")]
         public string SubmittDate { get; set; }
         [Display(Name ="Repairing Cost")]

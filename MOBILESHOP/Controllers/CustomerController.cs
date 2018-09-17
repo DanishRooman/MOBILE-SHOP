@@ -305,7 +305,8 @@ namespace MOBILESHOP.Controllers
                     imei_2 = row.device_imei_number_2,
                     customerSignature = row.device_customer_signature != null ? row.device_customer_signature : "~/images/300px-No_image_available.svg (1).png",
                     deliverDate = Convert.ToDateTime(row.device_deliver_date).ToString("MM/dd/yyyy h:mm tt"),
-                    repairingCost = row.device_repairing_cost
+                    repairingCost = row.device_repairing_cost,
+                    
 
                 };
                 dto.brandList = dbcontext.mb_brand_detail.AsEnumerable().Select(x => new BrandDTO
@@ -324,11 +325,12 @@ namespace MOBILESHOP.Controllers
                     faultName = x.fault_name
                 }).ToList();
 
-                ViewBag.images = dbcontext.mb_device_images.AsEnumerable().Select(x => new DeviceImagesDTO
+                ViewBag.images = dbcontext.mb_device_images.Where(d=>d.device_id==id).AsEnumerable().Select(d => new DeviceImagesDTO
                 {
-                    Id = x.image_key,
-                    path = x.image_path
+                    Id = d.image_key,
+                    path = d.image_path
                 }).ToList();
+               
 
 
                 ViewBag.servicesList = dbcontext.mbshop_service_detail.AsEnumerable().Select(x => new DataTransferObject.Services.ServiceDTO
@@ -363,11 +365,14 @@ namespace MOBILESHOP.Controllers
                     CustomerDTO dt = new CustomerDTO();
                     CstmrList = dbcontext.mbshop_device_detail.AsEnumerable().OrderByDescending(x => x.device_key).Select(x => new CostumerListingDto
                     {
+
                         id = x.device_key,
+                        BillNo = x.device_key.ToString(),
                         Name = x.mbshop_customer_details.customer_name,
                         BRAND = x.mb_model_detail.mb_brand_detail.brand_name,
                         MODEL = x.mb_model_detail.model_name,
-                        FAULT = x.mb_fault_detail.fault_name
+                        FAULT = x.mb_fault_detail.fault_name,
+                       Mobile=x.mbshop_customer_details.customer_mobile_number
 
                     }).ToList();
 

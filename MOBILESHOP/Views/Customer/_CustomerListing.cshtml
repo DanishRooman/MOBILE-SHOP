@@ -1,9 +1,12 @@
-﻿ @model IEnumerable<DataTransferObject.Customer.CostumerListingDto>
+﻿@model IEnumerable<DataTransferObject.Customer.CostumerListingDto>
 
 
 <table class="table table-bordered table-hover table-striped" id="customer">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BillNo)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -17,15 +20,22 @@
                 @Html.DisplayNameFor(model => model.FAULT)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+
+            <th>
                 Action
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
-        { 
+        {
 
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillNo)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -39,14 +49,17 @@
                     @Html.DisplayFor(modelItem => item.FAULT)
                 </td>
                 <td>
-                   @Html.ActionLink("Edit", "EditCostumer", new { id = item.id }) |
-                  <a href="javascript:void(0);" title="Delete Customer" onclick="Customer.initDeleteCustomer(@item.id);">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Mobile)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditCostumer", new { id = item.id }) |
+                    <a href="javascript:void(0);" title="Delete Customer" onclick="Customer.initDeleteCustomer(@item.id);">Delete</a> |
+                    @Html.ActionLink("Print Bill", "PrintBill",new { id=item.id})
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('#customer').DataTable({
