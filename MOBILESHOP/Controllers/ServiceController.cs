@@ -43,8 +43,7 @@ namespace MOBILESHOP.Controllers
             }
             catch (Exception)
             {
-
-                throw;
+                return Json(new { key = false, value = "Service is not found" }, JsonRequestBehavior.AllowGet);
             }
 
         }

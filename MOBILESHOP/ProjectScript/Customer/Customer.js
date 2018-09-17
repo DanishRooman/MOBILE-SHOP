@@ -44,7 +44,6 @@
             });
             var deviceKey = result.id;
             if (window.FormData !== undefined) {
-                debugger
                 var fileUpload = $("#fileUpload").get(0);
                 var files = fileUpload.files;
 
@@ -83,7 +82,8 @@
                 alert("Form data not supported by browser");
             }
             handleSaveServices(deviceKey);
-            handleEmptyCustomer();
+            setTimeout(function () { handlePrintBill(deviceKey); }, 1000);
+
         }
         else {
             $.toast({
@@ -94,6 +94,10 @@
             });
         }
 
+    };
+    var handlePrintBill = function (devicekey) {
+        var url = "/Customer/PrintBill?id=" + devicekey;
+        window.location.href = url;
     };
     var handleCustomerList = function () {
         $.ajax({
@@ -205,9 +209,58 @@
             traditional: true,
             dataType: "json",
             success: function () { },
-            failure: function () {  }
+            failure: function () { }
         });
     };
+
+    var handleDeleteImage = function (id) {
+        $.confirm({
+            title: 'Delete Group',
+            content: 'Are you sure you want to delete this Image?',
+            theme: 'material',
+            buttons: {
+                confirm: {
+                    btnClass: "btn-blue",
+                    keys: ["enter"],
+                    action: function () {
+                        $.ajax({
+                            url: '/Customer/DeleteImage',
+                            type: 'GET',
+                            dataType: 'json',
+                            data: { "imageKey": id },
+                            success: function (result) {
+                                if (result.key) {
+                                    $.toast({
+                                        heading: 'Success',
+                                        text: result.value,
+                                        showHideTransition: 'slide',
+                                        icon: 'success'
+                                    });
+                                    setTimeout(function () { location.reload(); }, 1200);
+                                }
+                                else {
+                                    $.toast({
+                                        heading: 'Error',
+                                        text: result.value,
+                                        showHideTransition: 'fade',
+                                        icon: 'error'
+                                    });
+                                }
+                            },
+                            error: function () {
+                                console.log("Error");
+                            }
+                        });
+                    }
+                },
+                cancel: function () {
+
+                },
+            }
+        });
+    };
+
+
     //public Static
     return {
 
@@ -241,6 +294,9 @@
         initSignatureSave: function () {
             handleSignatureSave();
         },
+        initDeleteImage: function (id) {
+            handleDeleteImage(id);
+        }
     };
 
 

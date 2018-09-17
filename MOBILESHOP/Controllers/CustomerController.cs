@@ -3,13 +3,18 @@ using DataTransferObject.Brand;
 using DataTransferObject.Customer;
 using DataTransferObject.Customer_Device_Services;
 using DataTransferObject.mbModel;
+using DataTransferObject.Services;
+using Rotativa.Core.Options;
+using Rotativa.MVC;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+
 
 namespace MOBILESHOP.Controllers
 {
@@ -25,7 +30,7 @@ namespace MOBILESHOP.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult Customer_Device_Detail(int id)
+        public ActionResult PrintBill(int id)
         {
             Customer_Device_ServicesDTO dto = new Customer_Device_ServicesDTO();
             using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
@@ -34,6 +39,7 @@ namespace MOBILESHOP.Controllers
                 var cstmr = dbcontext.mbshop_device_detail.Find(id);
                 if (cstmr != null)
                 {
+                    dto.RefNo = cstmr.device_key.ToString();
                     dto.customerName = cstmr.mbshop_customer_details.customer_name;
                     dto.Address = cstmr.mbshop_customer_details.customer_address;
                     dto.Email = cstmr.mbshop_customer_details.customer_email;
@@ -46,12 +52,20 @@ namespace MOBILESHOP.Controllers
                     dto.SubmittDate = cstmr.device_date_submitt.ToString("MM/dd/yyyy h:mm tt");
                     dto.RepairingCost = cstmr.device_repairing_cost;
                     dto.DeliverDate = Convert.ToDateTime(cstmr.device_deliver_date).ToString("MM/dd/yyyy h:mm tt");
-                    dto.CustomerSignature = cstmr.device_customer_signature;
+                    dto.CustomerSignature = cstmr.device_customer_signature != null ? cstmr.device_customer_signature : "~/images/300px-No_image_available.svg (1).png";
 
                 }
+                int i = 1;
+                dto.services = dbcontext.Costumer_Device_Services.Where(x => x.cds_device_key == id).AsEnumerable().Select(x => new ServiceDTO
+                {
+                    id = (i++),
+                    serviceName = x.mbshop_service_detail.service_name,
+                    serviceCharges = x.mbshop_service_detail.service_charges
+                }).ToList();
             };
-            return View("Customer_Device_Detail", dto);
 
+
+            return View("CustomerBill", dto);
         }
 
         [HttpGet]
@@ -126,23 +140,39 @@ namespace MOBILESHOP.Controllers
                         };
                         dbcontext.mbshop_device_detail.Add(device);
                         dbcontext.SaveChanges();
-                        return Json(new { key = true, value = "Customer added successfully", id = device.device_key }, JsonRequestBehavior.AllowGet);
+                        return Json(new { key = true, value = "Device Details added successfully", id = device.device_key }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
-                        var data = dbcontext.mbshop_customer_details.Find(dto.id);
-                        if (data != null)
+                        var device = dbcontext.mbshop_device_detail.Find(dto.id);
+                        if(device != null)
                         {
-                            data.customer_name = dto.Name;
-                            data.customer_address = dto.Address;
-                            data.customer_email = dto.Email;
-                            data.customer_mobile_number = dto.Mobile;
+                            device.device_customer_signature = dto.customerSignature;
+                            device.device_date_submitt = submitDate;
+                            device.device_deliver_date = deliverDate;
+                            device.device_description = dto.Description;
+                            device.device_serial_number = dto.Serial;
+                            device.device_imei_number_1 = dto.imei_1;
+                            device.device_imei_number_2 = dto.imei_2;
+                            device.device_model_key = dto.model;
+                            device.device_fault_key = dto.fault;
+                            device.device_repairing_cost = dto.repairingCost;
+                        }
+                        dbcontext.SaveChanges();
+                        int customerID = device.device_costumer;
+                        var customer = dbcontext.mbshop_customer_details.Find(customerID);
+                        if (customer != null)
+                        {
+                            customer.customer_name = dto.Name;
+                            customer.customer_address = dto.Address;
+                            customer.customer_email = dto.Email;
+                            customer.customer_mobile_number = dto.Mobile;
                             dbcontext.SaveChanges();
-                            return Json(new { key = true, value = "Customer update successfully" }, JsonRequestBehavior.AllowGet);
+                            return Json(new { key = true, value = "Device Details updated successfully" , id = device.device_key }, JsonRequestBehavior.AllowGet);
                         }
                         else
                         {
-                            return Json(new { key = false, value = "Customer is not found" }, JsonRequestBehavior.AllowGet);
+                            return Json(new { key = false, value = "Device Details is not found" }, JsonRequestBehavior.AllowGet);
                         }
                     }
                 };
@@ -159,46 +189,50 @@ namespace MOBILESHOP.Controllers
         public ActionResult UploadFiles()
         {
             // Checking no of files injected in Request object  
-            if (Request.Files.Count > 0)
+            try
             {
-                try
+                int devicekey = Convert.ToInt32(Request.Form["deviceKey"]);
+                String paths = Server.MapPath("~/Uploads"); //Path
+
+                //Check if directory exist
+                if (!System.IO.Directory.Exists(paths))
+                {
+                    Directory.CreateDirectory(paths); //Create directory if it doesn't exist
+                }
+
+
+                Boolean isCapture = Convert.ToBoolean(Request.Form["iscapture"]);
+
+                if (isCapture)
+                {
+                    string base64image = Request.Form["CameraImage"].ToString();
+                    var t = base64image.Substring(23);
+                    var randomFileName = Guid.NewGuid().ToString().Substring(0, 4) + ".png";
+                    string imgPath = Path.Combine(paths, randomFileName);
+                    string filePath = "/Uploads/" + randomFileName;
+                    byte[] bytes = Convert.FromBase64String(t);
+                    System.IO.File.WriteAllBytes(imgPath, bytes);
+                    using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                    {
+
+                        mb_device_images images = new mb_device_images()
+                        {
+                            device_id = devicekey,
+                            image_path = filePath
+                        };
+                        dbcontext.mb_device_images.Add(images);
+                        dbcontext.SaveChanges();
+
+                    };
+                }
+
+                if (Request.Files.Count > 0)
                 {
 
-                    String paths = Server.MapPath("~/Uploads"); //Path
-
-                    //Check if directory exist
-                    if (!System.IO.Directory.Exists(paths))
-                    {
-                        Directory.CreateDirectory(paths); //Create directory if it doesn't exist
-                    }
 
                     //  Get all files from Request object  
                     HttpFileCollectionBase files = Request.Files;
-                    int devicekey = Convert.ToInt32(Request.Form["deviceKey"]);
-                    Boolean isCapture = Convert.ToBoolean(Request.Form["iscapture"]);
 
-                    if (isCapture)
-                    {
-                        string base64image = Request.Form["CameraImage"].ToString();
-                        var t = base64image.Substring(23);
-                        var randomFileName = Guid.NewGuid().ToString().Substring(0, 4) + ".png";
-                        string imgPath = Path.Combine(paths, randomFileName);
-                        string filePath = "/Uploads/" + randomFileName;
-                        byte[] bytes = Convert.FromBase64String(t);
-                        System.IO.File.WriteAllBytes(imgPath, bytes);
-                        using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
-                        {
-
-                            mb_device_images images = new mb_device_images()
-                            {
-                                device_id = devicekey,
-                                image_path = filePath
-                            };
-                            dbcontext.mb_device_images.Add(images);
-                            dbcontext.SaveChanges();
-
-                        };
-                    }
 
                     for (int i = 0; i < files.Count; i++)
                     {
@@ -233,22 +267,20 @@ namespace MOBILESHOP.Controllers
                             dbcontext.SaveChanges();
 
                         };
-
-
-
                     }
                     // Returns message that successfully uploaded  
                     return Json("File Uploaded Successfully!");
                 }
-                catch (Exception ex)
+                else
                 {
-                    return Json("Error occurred. Error details: " + ex.Message);
+                    return Json("No files selected.");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return Json("No files selected.");
+                return Json("Error occurred. Error details: " + ex.Message);
             }
+
         }
 
         public ActionResult EditCostumer(int id)
@@ -271,6 +303,9 @@ namespace MOBILESHOP.Controllers
                     Serial = row.device_serial_number,
                     imei_1 = row.device_imei_number_1,
                     imei_2 = row.device_imei_number_2,
+                    customerSignature = row.device_customer_signature != null ? row.device_customer_signature : "~/images/300px-No_image_available.svg (1).png",
+                    deliverDate = Convert.ToDateTime(row.device_deliver_date).ToString("MM/dd/yyyy h:mm tt"),
+                    repairingCost = row.device_repairing_cost
 
                 };
                 dto.brandList = dbcontext.mb_brand_detail.AsEnumerable().Select(x => new BrandDTO
@@ -291,9 +326,25 @@ namespace MOBILESHOP.Controllers
 
                 ViewBag.images = dbcontext.mb_device_images.AsEnumerable().Select(x => new DeviceImagesDTO
                 {
-                    Id = x.device_id,
+                    Id = x.image_key,
                     path = x.image_path
                 }).ToList();
+
+
+                ViewBag.servicesList = dbcontext.mbshop_service_detail.AsEnumerable().Select(x => new DataTransferObject.Services.ServiceDTO
+                {
+                    id = x.service_key,
+                    serviceName = x.service_name,
+                    serviceCharges = x.service_charges,
+                }).ToList();
+
+                ViewBag.selected_servicesList = dbcontext.Costumer_Device_Services.AsEnumerable().Select(x => new DataTransferObject.Services.ServiceDTO
+                {
+                    id = x.mbshop_service_detail.service_key,
+                    serviceName = x.mbshop_service_detail.service_name,
+                    serviceCharges = x.mbshop_service_detail.service_charges,
+                }).ToList();
+
 
                 return View("EditCostumer", dto);
             };
@@ -341,13 +392,19 @@ namespace MOBILESHOP.Controllers
                     var cstmr = dbcontext.mbshop_device_detail.Find(id);
                     if (cstmr != null)
                     {
+                        var customer = dbcontext.mbshop_customer_details.Find(cstmr.mbshop_customer_details.customer_id);
                         dbcontext.mbshop_device_detail.Remove(cstmr);
                         dbcontext.SaveChanges();
-                        return Json(new { key = true, value = "Customer deleted successfully" }, JsonRequestBehavior.AllowGet);
+                        if (customer != null)
+                        {
+                            dbcontext.mbshop_customer_details.Remove(customer);
+                            dbcontext.SaveChanges();
+                        }
+                        return Json(new { key = true, value = "Device Details deleted successfully" }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
-                        return Json(new { key = false, value = "Customer not Found its Deleted from data base!!" }, JsonRequestBehavior.AllowGet);
+                        return Json(new { key = false, value = "Device Details not Found its Deleted from data base!!" }, JsonRequestBehavior.AllowGet);
                     }
                 };
 
@@ -367,6 +424,15 @@ namespace MOBILESHOP.Controllers
             {
                 using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
+                    var list = dbcontext.Costumer_Device_Services.Where(x => x.cds_device_key == deviceId).ToList();
+                    if (list.Any())
+                    {
+                        foreach (var item in list)
+                        {
+                            dbcontext.Costumer_Device_Services.Remove(item);
+                            dbcontext.SaveChanges();
+                        }
+                    }
                     foreach (var item in servicesId)
                     {
                         int serviceKey = Convert.ToInt32(item);
@@ -376,6 +442,7 @@ namespace MOBILESHOP.Controllers
                             cds_device_key = deviceId,
                         };
                         dbcontext.Costumer_Device_Services.Add(service);
+                        dbcontext.SaveChanges();
                     }
                     return Json(new { key = true, value = "Services added successfully" }, JsonRequestBehavior.AllowGet);
                 };
@@ -387,6 +454,42 @@ namespace MOBILESHOP.Controllers
 
 
         }
+
+
+
+        public ActionResult DeleteImage(int imageKey)
+        {
+            try
+            {
+                using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                {
+                    var item = dbcontext.mb_device_images.Find(imageKey);
+                    if (item != null)
+                    {
+                        var filePath = "~" + item.image_path;
+                        if (System.IO.File.Exists(Server.MapPath(filePath)))
+                        {
+                            System.IO.File.Delete(Server.MapPath(filePath));
+                        }
+
+                        dbcontext.mb_device_images.Remove(item);
+                        dbcontext.SaveChanges();
+                        return Json(new { key = true, value = "Image deleted successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { key = false, value = "Image not found" }, JsonRequestBehavior.AllowGet);
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                return Json(new { key = false, value = "Unable to process your request please contact to your admin." }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
     }
 
 

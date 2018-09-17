@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataTransferObject.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace DataTransferObject.Customer_Device_Services
 {
    public class Customer_Device_ServicesDTO
     {
+        public string RefNo { get; set; }
+
         //Customer 
         [Display(Name ="Customer Name")]
         public string customerName { get; set; }
@@ -16,7 +19,7 @@ namespace DataTransferObject.Customer_Device_Services
         public string Address { get; set; }
         [Display(Name ="Email")]
         public string Email { get; set; }
-        [Display(Name ="Phon Number")]
+        [Display(Name ="Phone Number")]
         public string PhonNumber { get; set; }
         //Device
         [Display(Name ="IMEI 1")]
@@ -35,7 +38,9 @@ namespace DataTransferObject.Customer_Device_Services
         public string RepairingCost { get; set; }
         [Display(Name ="Deliver Date")]
         public string DeliverDate { get; set; }
-        [Display(Name ="Customer Signature")]
+        [Display(Name = "Customer Signature")]
         public string CustomerSignature { get; set; }
+        public List<ServiceDTO> services { get; set; }
+
     }
 }

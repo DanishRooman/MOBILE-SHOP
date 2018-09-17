@@ -22,7 +22,11 @@ namespace MOBILESHOP
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/jquery.blockui.min.js",
+                      "~/Scripts/app.js",
+                      "~/Scripts/ui-blockui.js"
+                      ));
 
             bundles.Add(new ScriptBundle("~/Script/unobstrasive").Include(
               "~/Scripts/jquery.unobtrusive-ajax.js",
@@ -68,7 +72,8 @@ namespace MOBILESHOP
                 "~/assets/style.css",
                 "~/Content/select2.min.css",
                 "~/fontawesome/css/fontawesome.css",
-                "~/Content/bootstrap-datetimepicker.min.css"
+                "~/Content/bootstrap-datetimepicker.min.css",
+                "~/Content/components.css"
                ));
 
 

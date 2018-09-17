@@ -1,0 +1,229 @@
+﻿@model DataTransferObject.Customer_Device_Services.Customer_Device_ServicesDTO
+@using DataTransferObject.Services;
+@{
+    ViewBag.Title = "Customer_Device_Detail";
+    Layout = null;
+}
+
+<link href="~/assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/assets/bootstrap/js/bootstrap.js"></script>
+<script src="~/Scripts/printThis.js"></script>
+
+<div class="container" id="costumer_details">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6" style="width:50% !important;float:left;">
+                            <h5><i>Ref No. <b style="text-decoration: underline;">@Html.DisplayFor(model => model.RefNo)</b></i></h5>
+                        </div>
+                        <div class="col-md-6 text-right" style="width:50% !important;float:right;">
+                            <h5><i>Dated: <b style="text-decoration: underline;">@DateTime.Now.Date.ToString("dd/MMM/yyyy")</b></i></h5>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6" style="width:50% !important;float:left;">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4>Customer Detail</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-bordered table-hover">
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.customerName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.customerName)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.Address)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.Address)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.Email)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.Email)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.PhonNumber)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.PhonNumber)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Customer Signature
+                                                </td>
+                                                <td>
+                                                    <img src="@Url.Content(@Model.CustomerSignature)" style="height: 70% !important;" class="img img-responsive" alt="Signature" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="width:50% !important;float:right;">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4>Device Detail</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-bordered table-hover">
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.Imei_1)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.Imei_1)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.Imei_2)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.Imei_2)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.Brand)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.Brand)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.Model)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.Model)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.Fault)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.Fault)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.SubmittDate)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.SubmittDate)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.RepairingCost)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.RepairingCost)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(model => model.DeliverDate)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.DeliverDate)
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="row" style="margin-top:2px;">
+                                        <div class="col-md-12">
+                                            <table id="tblServices" class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S.No#</th>
+                                                        <th>Service</th>
+                                                        <th>Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in (List<ServiceDTO>)Model.services)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.id</td>
+                                                            <td>@item.serviceName</td>
+                                                            <td>@item.serviceCharges</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-offset-8 col-md-4 text-right">
+                                            <h5 style="padding-right: 40%;"><i> Total Price: <b style="text-decoration: underline;">@Html.DisplayFor(model => model.RepairingCost)</b></i></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button id="btnPrint" onclick="printPage();" class="btn btn-default btn-lg">Print Bill</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function printPage() {
+        $('#costumer_details').printThis({
+            importCSS: true,
+            importStyle: true,
+            loadCSS: "/assets/bootstrap/css/bootstrap.css",
+            header: null,
+            footer: null,
+        });
+    }
+</script>

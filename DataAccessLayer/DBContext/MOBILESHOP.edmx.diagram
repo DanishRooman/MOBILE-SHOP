@@ -7,8 +7,8 @@
       <Diagram DiagramId="424de5b841fd47cb92dcdbf07aa833f6" Name="Diagram1">
         <EntityTypeShape EntityType="MOBILESHOPModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="10.5" />
         <EntityTypeShape EntityType="MOBILESHOPModel.AspNetRoles" Width="1.5" PointX="7.75" PointY="11.25" />
-        <EntityTypeShape EntityType="MOBILESHOPModel.AspNetUserClaims" Width="1.5" PointX="12.25" PointY="12.25" />
-        <EntityTypeShape EntityType="MOBILESHOPModel.AspNetUserLogins" Width="1.5" PointX="12.25" PointY="9.75" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.AspNetUserClaims" Width="1.5" PointX="12.25" PointY="9.75" />
+        <EntityTypeShape EntityType="MOBILESHOPModel.AspNetUserLogins" Width="1.5" PointX="12.25" PointY="12.5" />
         <EntityTypeShape EntityType="MOBILESHOPModel.AspNetUsers" Width="1.5" PointX="10" PointY="10" />
         <EntityTypeShape EntityType="MOBILESHOPModel.Costumer_Device_Services" Width="1.5" PointX="7.5" PointY="4" />
         <EntityTypeShape EntityType="MOBILESHOPModel.mb_brand_detail" Width="1.5" PointX="0.75" PointY="4.25" />
