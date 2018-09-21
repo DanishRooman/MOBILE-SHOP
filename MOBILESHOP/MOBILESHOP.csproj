@@ -397,6 +397,7 @@
     <Content Include="Views\Service\AddService.cshtml" />
     <Content Include="Views\Service\_ServiceListing.cshtml" />
     <Content Include="Views\Customer\CustomerBill.cshtml" />
+    <Content Include="Views\Customer\CustomerBillPdf.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

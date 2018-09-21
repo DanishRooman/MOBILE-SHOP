@@ -22,7 +22,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Mobile)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.isDelivered)
+            </th>
             <th>
                 Action
             </th>
@@ -50,6 +52,10 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Mobile)
+                </td>
+                <td class="text-center">
+                    @Html.Raw(item.isDelivered.Replace("\r\n", "<br />"))
+                    @*@Html.DisplayFor(modelItem => item.isDelivered)*@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "EditCostumer", new { id = item.id }) |

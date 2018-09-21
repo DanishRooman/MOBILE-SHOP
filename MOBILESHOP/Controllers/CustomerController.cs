@@ -4,17 +4,16 @@ using DataTransferObject.Customer;
 using DataTransferObject.Customer_Device_Services;
 using DataTransferObject.mbModel;
 using DataTransferObject.Services;
-using Rotativa.Core.Options;
-using Rotativa.MVC;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
-
+using Rotativa;
+using Rotativa.MVC;
+using iTextSharp.text;
+using System.Net.Mail;
 
 namespace MOBILESHOP.Controllers
 {
@@ -66,6 +65,118 @@ namespace MOBILESHOP.Controllers
 
 
             return View("CustomerBill", dto);
+        }
+
+
+        [HttpGet]
+        public ActionResult GeneratePdf(int id)
+        {
+            string pdfName = Guid.NewGuid().ToString();
+            Customer_Device_ServicesDTO dto = new Customer_Device_ServicesDTO();
+            using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+            {
+
+                var cstmr = dbcontext.mbshop_device_detail.Find(id);
+                if (cstmr != null)
+                {
+                    dto.RefNo = cstmr.device_key.ToString();
+                    dto.customerName = cstmr.mbshop_customer_details.customer_name;
+                    dto.Address = cstmr.mbshop_customer_details.customer_address;
+                    dto.Email = cstmr.mbshop_customer_details.customer_email;
+                    dto.PhonNumber = cstmr.mbshop_customer_details.customer_mobile_number;
+                    dto.Imei_1 = cstmr.device_imei_number_1;
+                    dto.Imei_2 = cstmr.device_imei_number_2;
+                    dto.Brand = cstmr.mb_model_detail.mb_brand_detail.brand_name;
+                    dto.Model = cstmr.mb_model_detail.model_name;
+                    dto.Fault = cstmr.mb_fault_detail.fault_name;
+                    dto.SubmittDate = cstmr.device_date_submitt.ToString("MM/dd/yyyy h:mm tt");
+                    dto.RepairingCost = cstmr.device_repairing_cost;
+                    dto.DeliverDate = Convert.ToDateTime(cstmr.device_deliver_date).ToString("MM/dd/yyyy h:mm tt");
+                    dto.CustomerSignature = cstmr.device_customer_signature != null ? cstmr.device_customer_signature : "~/images/300px-No_image_available.svg (1).png";
+
+                }
+                int i = 1;
+                dto.services = dbcontext.Costumer_Device_Services.Where(x => x.cds_device_key == id).AsEnumerable().Select(x => new ServiceDTO
+                {
+                    id = (i++),
+                    serviceName = x.mbshop_service_detail.service_name,
+                    serviceCharges = x.mbshop_service_detail.service_charges
+                }).ToList();
+            };
+            return new ViewAsPdf("CustomerBillPdf", dto)
+            {
+                FileName = pdfName + ".pdf"
+            };
+        }
+
+
+        [HttpGet]
+        public ActionResult EmailBill(int id)
+        {
+            try
+            {
+                string pdfName = Guid.NewGuid().ToString() + ".pdf";
+                Customer_Device_ServicesDTO dto = new Customer_Device_ServicesDTO();
+                using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                {
+
+                    var cstmr = dbcontext.mbshop_device_detail.Find(id);
+                    if (cstmr != null)
+                    {
+                        dto.RefNo = cstmr.device_key.ToString();
+                        dto.customerName = cstmr.mbshop_customer_details.customer_name;
+                        dto.Address = cstmr.mbshop_customer_details.customer_address;
+                        dto.Email = cstmr.mbshop_customer_details.customer_email;
+                        dto.PhonNumber = cstmr.mbshop_customer_details.customer_mobile_number;
+                        dto.Imei_1 = cstmr.device_imei_number_1;
+                        dto.Imei_2 = cstmr.device_imei_number_2;
+                        dto.Brand = cstmr.mb_model_detail.mb_brand_detail.brand_name;
+                        dto.Model = cstmr.mb_model_detail.model_name;
+                        dto.Fault = cstmr.mb_fault_detail.fault_name;
+                        dto.SubmittDate = cstmr.device_date_submitt.ToString("MM/dd/yyyy h:mm tt");
+                        dto.RepairingCost = cstmr.device_repairing_cost;
+                        dto.DeliverDate = Convert.ToDateTime(cstmr.device_deliver_date).ToString("MM/dd/yyyy h:mm tt");
+                        dto.CustomerSignature = cstmr.device_customer_signature != null ? cstmr.device_customer_signature : "~/images/300px-No_image_available.svg (1).png";
+
+                    }
+                    int i = 1;
+                    dto.services = dbcontext.Costumer_Device_Services.Where(x => x.cds_device_key == id).AsEnumerable().Select(x => new ServiceDTO
+                    {
+                        id = (i++),
+                        serviceName = x.mbshop_service_detail.service_name,
+                        serviceCharges = x.mbshop_service_detail.service_charges
+                    }).ToList();
+                };
+                string virtualpath = "~/PdfBills/" + pdfName;
+                var root = Server.MapPath("~/PdfBills/");
+
+                var path = Path.Combine(root, pdfName);
+                path = Path.GetFullPath(path);
+                var pdfPath = new ViewAsPdf("CustomerBillPdf", dto)
+                {
+                    FileName = pdfName,
+                    
+                };
+                var byteArray = pdfPath.BuildPdf(ControllerContext);
+                Stream stream = new MemoryStream(byteArray);
+                System.Net.Mime.ContentType ct = new System.Net.Mime.ContentType(System.Net.Mime.MediaTypeNames.Text.Html);
+                System.Net.Mail.Attachment attach = new System.Net.Mail.Attachment(stream, ct);
+                attach.ContentDisposition.FileName = pdfName;
+                //send Email
+                SmtpClient client = new SmtpClient();
+                MailMessage email = new MailMessage();
+                email.From = new MailAddress("bariq.tech@gmail.com");
+                email.To.Add(dto.Email);
+                email.Subject = "Bill from Bariq Mobile";
+                email.Body = "";
+                email.Attachments.Add(attach);
+                client.Send(email);
+                return Json(new { key = true, value = "Email sent Successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { key = true, value = "Email sending Failed - Please try again" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpGet]
@@ -146,7 +257,7 @@ namespace MOBILESHOP.Controllers
                     else
                     {
                         var device = dbcontext.mbshop_device_detail.Find(dto.id);
-                        if(device != null)
+                        if (device != null)
                         {
                             device.device_customer_signature = dto.customerSignature;
                             device.device_date_submitt = submitDate;
@@ -174,7 +285,7 @@ namespace MOBILESHOP.Controllers
                             customer.customer_email = dto.Email;
                             customer.customer_mobile_number = dto.Mobile;
                             dbcontext.SaveChanges();
-                            return Json(new { key = true, value = "Device Details updated successfully" , id = device.device_key }, JsonRequestBehavior.AllowGet);
+                            return Json(new { key = true, value = "Device Details updated successfully", id = device.device_key }, JsonRequestBehavior.AllowGet);
                         }
                         else
                         {
@@ -333,12 +444,12 @@ namespace MOBILESHOP.Controllers
                     faultName = x.fault_name
                 }).ToList();
 
-                ViewBag.images = dbcontext.mb_device_images.Where(d=>d.device_id==id).AsEnumerable().Select(d => new DeviceImagesDTO
+                ViewBag.images = dbcontext.mb_device_images.Where(d => d.device_id == id).AsEnumerable().Select(d => new DeviceImagesDTO
                 {
                     Id = d.image_key,
                     path = d.image_path
                 }).ToList();
-               
+
 
 
                 ViewBag.servicesList = dbcontext.mbshop_service_detail.AsEnumerable().Select(x => new DataTransferObject.Services.ServiceDTO
@@ -380,10 +491,9 @@ namespace MOBILESHOP.Controllers
                         BRAND = x.mb_model_detail.mb_brand_detail.brand_name,
                         MODEL = x.mb_model_detail.model_name,
                         FAULT = x.mb_fault_detail.fault_name,
-                       Mobile=x.mbshop_customer_details.customer_mobile_number
-
+                        Mobile = x.mbshop_customer_details.customer_mobile_number,
+                        isDelivered = x.device_is_delivered == true ? "<h5><span class='badge badge-primary'>Delivered</span></h5>" : "<h5><span class='badge badge-danger'>Not Yet</span></h5>"
                     }).ToList();
-
                 };
 
                 return PartialView("_CustomerListing", CstmrList);

@@ -17,5 +17,7 @@ namespace DataTransferObject.Customer
         public string BRAND { get; set; }
         public string MODEL { get; set; }
         public string FAULT { get; set; }
+        [Display(Name="Device Delivered")]
+        public string isDelivered { get; set; }
     }
 }
