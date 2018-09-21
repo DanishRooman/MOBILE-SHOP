@@ -53,6 +53,52 @@
             </div>
         </div>
         <br />
+        <h2> Delivery Details </h2>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.deviceDelivered, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.deviceDelivered, new SelectList(new List<SelectListItem> {
+             new SelectListItem { Text = "Delivered", Value = "1"},
+             new SelectListItem { Text = "Not yet", Value = "0"} }, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.deviceDelivered, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div id="deliveryDiv" class="hide">
+            <div class="form-group">
+                @Html.LabelFor(model => model.receivedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.receivedDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    @Html.ValidationMessageFor(model => model.receivedDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.receivedName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.receivedName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.receivedName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <a href="Javascript:void(0);" onclick="Customer.initReceiverSignatureModel();" class="btn btn-primary">Receiver Signature</a>
+                </div>
+            </div>
+            <div class="form-group hide">
+                @Html.LabelFor(model => model.receivedSignature, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.receivedSignature, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.receivedSignature, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" id="ReceiverSigantureDiv">
+                @Html.LabelFor(model => model.receivedSignature, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <img class="img img-thumbnail" src='@Model.receivedSignature' id="ReceiverSignatureImg" alt="ReceiverSiganture">
+                </div>
+            </div>
+        </div>
+        <br />
         <h2> Device Details </h2>
         <hr />
         <div class="form-group">
@@ -123,7 +169,13 @@
                 <a href="Javascript:void(0);" onclick="Customer.initCamera();" class="btn btn-danger"> <span class="glyphicon glyphicon-camera"></span> Capture Images</a>
             </div>
         </div>
-
+        <div class="form-group hide">
+            @Html.LabelFor(model => model.customerSignature, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.customerSignature, new { htmlAttributes = new { @class = "form-control", @id = "txtSignature" } })
+                @Html.ValidationMessageFor(model => model.customerSignature, "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group" id="sigantureDiv">
             <label class="control-label col-md-2">Costumer Signature</label>
             <div class="col-md-10">
@@ -257,6 +309,32 @@
     </div>
 </div>
 
+<div id="receiverModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Receiver Signature</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div id="receiverSignature">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="Customer.initReceiverSignatureReset();">Reset</button>
+                <button type="button" class="btn btn-primary" onclick="Customer.initReceiverSignatureSave();">Save and Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <script src="~/assets/webcam.js"></script>
 <script src="~/ProjectScript/Customer/Customer.js"></script>
@@ -275,6 +353,21 @@
             add_class: null,
             rtl: false
         });
+        if (parseInt($("#deviceDelivered").val()) == 0) {
+            $("#deliveryDiv").addClass('hide');
+        }
+        else {
+            $("#deliveryDiv").removeClass('hide');
+        }
+    });
+    $("#deviceDelivered").change(function () {
+        debugger
+        if (parseInt($(this).val()) == 0) {
+            $("#deliveryDiv").addClass('hide');
+        }
+        else {
+            $("#deliveryDiv").removeClass('hide');
+        }
     });
 </script>
 

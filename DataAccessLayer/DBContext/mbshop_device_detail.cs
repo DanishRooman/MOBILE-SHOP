@@ -33,6 +33,10 @@ namespace DataAccessLayer.DBContext
         public string device_repairing_cost { get; set; }
         public Nullable<System.DateTime> device_deliver_date { get; set; }
         public string device_customer_signature { get; set; }
+        public bool device_is_delivered { get; set; }
+        public Nullable<System.DateTime> device_receiving_date { get; set; }
+        public string device_receiver_name { get; set; }
+        public string device_receiver_signature { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Costumer_Device_Services> Costumer_Device_Services { get; set; }

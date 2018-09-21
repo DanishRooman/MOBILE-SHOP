@@ -65,5 +65,18 @@ namespace DataTransferObject.Customer
         [Required]
         [Display(Name ="Customer Signature")]
         public string customerSignature { get; set; }
+
+        //Receiving Device
+        [Required]
+        [Display(Name = "Device Delivered")]
+        public int deviceDelivered { get; set; }
+        [Display(Name = "Received Date")]
+        public string receivedDate { get; set; }
+        [Display(Name = "Received Name")]
+        public string receivedName { get; set; }
+        [Display(Name = "Received Signature")]
+        public string receivedSignature { get; set; }
+
+
     }
 }

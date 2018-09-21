@@ -107,6 +107,7 @@ namespace MOBILESHOP.Controllers
             {
                 DateTime submitDate = DateTime.ParseExact(dto.datetime, "MM/dd/yyyy h:mm tt", null);
                 DateTime deliverDate = DateTime.ParseExact(dto.datetime, "MM/dd/yyyy h:mm tt", null);
+                DateTime receiveDate = DateTime.ParseExact(dto.receivedDate, "MM/dd/yyyy h:mm tt", null);
                 using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
                     if (dto.id == 0)
@@ -157,6 +158,11 @@ namespace MOBILESHOP.Controllers
                             device.device_model_key = dto.model;
                             device.device_fault_key = dto.fault;
                             device.device_repairing_cost = dto.repairingCost;
+                            device.device_customer_signature = dto.customerSignature;
+                            device.device_receiver_signature = dto.receivedSignature;
+                            device.device_receiver_name = dto.receivedName;
+                            device.device_receiving_date = receiveDate;
+                            device.device_is_delivered = dto.deviceDelivered == 1 ? true : false;
                         }
                         dbcontext.SaveChanges();
                         int customerID = device.device_costumer;
@@ -303,11 +309,13 @@ namespace MOBILESHOP.Controllers
                     Serial = row.device_serial_number,
                     imei_1 = row.device_imei_number_1,
                     imei_2 = row.device_imei_number_2,
-                    customerSignature = row.device_customer_signature != null ? row.device_customer_signature : "~/images/300px-No_image_available.svg (1).png",
+                    customerSignature = row.device_customer_signature != null ? row.device_customer_signature : "/images/300px-No_image_available.svg (1).png",
                     deliverDate = Convert.ToDateTime(row.device_deliver_date).ToString("MM/dd/yyyy h:mm tt"),
                     repairingCost = row.device_repairing_cost,
-                    
-
+                    receivedSignature = row.device_receiver_signature != null ? row.device_receiver_signature : "/images/300px-No_image_available.svg (1).png",
+                    receivedDate = Convert.ToDateTime(row.device_receiving_date).ToString("MM/dd/yyyy h:mm tt"),
+                    receivedName = row.device_receiver_name,
+                    deviceDelivered = row.device_is_delivered == true ? 1 : 0
                 };
                 dto.brandList = dbcontext.mb_brand_detail.AsEnumerable().Select(x => new BrandDTO
                 {

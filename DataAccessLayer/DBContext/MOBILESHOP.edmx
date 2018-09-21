@@ -130,6 +130,10 @@
           <Property Name="device_repairing_cost" Type="varchar" MaxLength="150" />
           <Property Name="device_deliver_date" Type="datetime" />
           <Property Name="device_customer_signature" Type="varchar(max)" />
+          <Property Name="device_is_delivered" Type="bit" Nullable="false" />
+          <Property Name="device_receiving_date" Type="datetime" />
+          <Property Name="device_receiver_name" Type="varchar" MaxLength="150" />
+          <Property Name="device_receiver_signature" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="mbshop_service_detail">
           <Key>
@@ -543,6 +547,10 @@
           <Property Name="device_repairing_cost" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="device_deliver_date" Type="DateTime" Precision="3" />
           <Property Name="device_customer_signature" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="device_is_delivered" Type="Boolean" Nullable="false" />
+          <Property Name="device_receiving_date" Type="DateTime" Precision="3" />
+          <Property Name="device_receiver_name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="device_receiver_signature" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Costumer_Device_Services" Relationship="MOBILESHOPModel.FK_Costumer_Device_Services_mbshop_device_detail" FromRole="mbshop_device_detail" ToRole="Costumer_Device_Services" />
           <NavigationProperty Name="mb_device_images" Relationship="MOBILESHOPModel.FK_mb_device_images_mbshop_device_detail" FromRole="mbshop_device_detail" ToRole="mb_device_images" />
           <NavigationProperty Name="mb_fault_detail" Relationship="MOBILESHOPModel.FK_mbshop_device_detail_mb_fault_detail" FromRole="mbshop_device_detail" ToRole="mb_fault_detail" />
@@ -806,6 +814,10 @@
           <EntitySetMapping Name="mbshop_device_detail">
             <EntityTypeMapping TypeName="MOBILESHOPModel.mbshop_device_detail">
               <MappingFragment StoreEntitySet="mbshop_device_detail">
+                <ScalarProperty Name="device_receiver_signature" ColumnName="device_receiver_signature" />
+                <ScalarProperty Name="device_receiver_name" ColumnName="device_receiver_name" />
+                <ScalarProperty Name="device_receiving_date" ColumnName="device_receiving_date" />
+                <ScalarProperty Name="device_is_delivered" ColumnName="device_is_delivered" />
                 <ScalarProperty Name="device_customer_signature" ColumnName="device_customer_signature" />
                 <ScalarProperty Name="device_deliver_date" ColumnName="device_deliver_date" />
                 <ScalarProperty Name="device_repairing_cost" ColumnName="device_repairing_cost" />

@@ -187,14 +187,51 @@
         });
 
     };
+    var handleReceiverSignatureModel = function () {
+        $("#receiverSignature").empty();
+        var htmldiv = "<div id='signatureReceiver'><div id='receivedSignature'></div></div>";
+        $("#receiverSignature").html(htmldiv);
+        $('#receiverModel').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+        $("#receiverModel").modal("show");
+
+        $("#signatureReceiver").jSignature({
+            "destroy": true,
+            "reset": true,
+            "clear": true,
+            "UndoButton": true,
+            "color": "#000",
+            "lineWidth": 4,
+            "width": 250,
+            "height": 200,
+            "background-color": "#edf6e9"
+        });
+
+    };
+
+    var handleReceiverSignatureReset = function () {
+        $("#signatureReceiver").jSignature('reset');
+    };
+
     var handleSignatureReset = function () {
         $("#signatureCustomer").jSignature('reset');
     };
+
+
     var handleSignatureSave = function () {
         var rawdata = $("#signatureCustomer").jSignature('getData', "default");
         $("#txtSignature").val(rawdata);
         $("#signatureImg").attr("src", rawdata);
         $("#signatureModel").modal("hide");
+    };
+
+    var handleReceiverSignatureSave = function () {
+        var rawdata = $("#signatureReceiver").jSignature('getData', "default");
+        $("#receivedSignature").val(rawdata);
+        $("#ReceiverSignatureImg").attr("src", rawdata);
+        $("#receiverModel").modal("hide");
     };
     var handleSaveServices = function (deviceKey) {
         var services = [];
@@ -288,11 +325,20 @@
         initSignatureModel: function () {
             handleSignatureModel();
         },
+        initReceiverSignatureModel: function () {
+            handleReceiverSignatureModel();
+        },
         initSignatureReset: function () {
             handleSignatureReset();
         },
+        initReceiverSignatureReset: function () {
+            handleReceiverSignatureReset();
+        },
         initSignatureSave: function () {
             handleSignatureSave();
+        },
+        initReceiverSignatureSave: function () {
+            handleReceiverSignatureSave();
         },
         initDeleteImage: function (id) {
             handleDeleteImage(id);

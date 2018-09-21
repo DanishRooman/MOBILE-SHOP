@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using MOBILESHOP.Models;
+using System.Net.Mail;
 
 namespace MOBILESHOP
 {
@@ -18,8 +19,20 @@ namespace MOBILESHOP
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            try
+            {
+                // Plug in your email service here to send an email.
+                SmtpClient client = new SmtpClient();
+                return client.SendMailAsync("bariq.tech@gmail.com",
+                                            message.Destination,
+                                            message.Subject,
+                                            message.Body);
+            }
+            catch(Exception ex)
+            {
+                return Task.FromResult(0);
+            }
+            
         }
     }
 
@@ -40,7 +53,7 @@ namespace MOBILESHOP
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
@@ -81,7 +94,7 @@ namespace MOBILESHOP
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
+                manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
