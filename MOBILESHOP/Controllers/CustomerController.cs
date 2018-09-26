@@ -155,7 +155,7 @@ namespace MOBILESHOP.Controllers
                 var pdfPath = new ViewAsPdf("CustomerBillPdf", dto)
                 {
                     FileName = pdfName,
-                    
+
                 };
                 var byteArray = pdfPath.BuildPdf(ControllerContext);
                 Stream stream = new MemoryStream(byteArray);
@@ -173,7 +173,7 @@ namespace MOBILESHOP.Controllers
                 client.Send(email);
                 return Json(new { key = true, value = "Email sent Successfully" }, JsonRequestBehavior.AllowGet);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json(new { key = true, value = "Email sending Failed - Please try again" }, JsonRequestBehavior.AllowGet);
             }
@@ -218,7 +218,11 @@ namespace MOBILESHOP.Controllers
             {
                 DateTime submitDate = DateTime.ParseExact(dto.datetime, "MM/dd/yyyy h:mm tt", null);
                 DateTime deliverDate = DateTime.ParseExact(dto.datetime, "MM/dd/yyyy h:mm tt", null);
-                DateTime receiveDate = DateTime.ParseExact(dto.receivedDate, "MM/dd/yyyy h:mm tt", null);
+                DateTime? receiveDate = null;
+                if(dto.receivedDate != null && dto.receivedDate !=  "")
+                {
+                    receiveDate = (DateTime.ParseExact(dto.receivedDate, "MM/dd/yyyy h:mm tt", null));
+                }
                 using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                 {
                     if (dto.id == 0)
