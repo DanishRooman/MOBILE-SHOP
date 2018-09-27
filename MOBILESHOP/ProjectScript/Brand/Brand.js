@@ -28,8 +28,9 @@
                 showHideTransition: 'slide',
                 icon: 'success'
             });
-            handleBrandList();
             handleEmptyBrand();
+            handleBrandList();
+           
 
         }
         else {

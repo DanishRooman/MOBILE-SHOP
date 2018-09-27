@@ -19,11 +19,8 @@
 
 
     };
-    var handleEmptyService = function () {
-        $('.form-control').val("");
-    };
-
-    var handleSuccessService = function (result) {
+  
+var handleSuccessService = function (result) {
         debugger
         if (result.key) {
 
@@ -45,7 +42,12 @@
             });
         }
 
-    };
+};
+var handleEmptyService = function () {
+    debugger
+    $('.form-control').val("");
+    $("#CreateService").modal("hide");
+};
     var handleServiceList = function () {
         $.ajax({
             url: '/Service/ServiceListing',

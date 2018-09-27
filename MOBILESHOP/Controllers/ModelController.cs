@@ -45,7 +45,7 @@ namespace MOBILESHOP.Controllers
                     {
                         id = x.model_key,
                         modelName = x.model_name,
-                        Brand = x.model_brand_key
+                        BrandName = x.mb_brand_detail.brand_name
                     }).ToList();
                     return PartialView("ModelListing", modelList);
                 };
@@ -60,51 +60,60 @@ namespace MOBILESHOP.Controllers
         }
         [HttpPost]
         public ActionResult AddOrUpdateModel(ModelDTO dto)
+
         {
             try
             {
-                if (dto.id != 0)
+                if (ModelState.IsValid)
                 {
                     using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
                     {
-                        int key = dto.id;
-                        var model = dbcontext.mb_model_detail.Find(key);
-                        if (model != null)
+                        if (dto.id == 0)
                         {
-                            model.model_name = dto.modelName;
-                            model.model_brand_key = dto.Brand;
+
+                            mb_model_detail mbModel = new mb_model_detail()
+                            {
+
+                                model_name = dto.modelName,
+                                model_brand_key = dto.Brand
+                            };
+                            dbcontext.mb_model_detail.Add(mbModel);
                             dbcontext.SaveChanges();
-                            return Json(new { key = true, value = "Model updated successfully" }, JsonRequestBehavior.AllowGet);
+                            return Json(new { key = true, value = "model added successfully" }, JsonRequestBehavior.AllowGet);
+
                         }
+
                         else
                         {
-                            return Json(new { key = true, value = "Model not found" }, JsonRequestBehavior.AllowGet);
+                            var model = dbcontext.mb_model_detail.Find(dto.id);
+                            if (model != null)
+                            {
+                                model.model_name = dto.modelName;
+                                model.model_brand_key = dto.Brand;
+                                dbcontext.SaveChanges();
+                                return Json(new { key = true, value = "Model updated successfully" }, JsonRequestBehavior.AllowGet);
+                            }
+                            else
+                            {
+                                return Json(new { key = true, value = "Model not found" }, JsonRequestBehavior.AllowGet);
+                            }
                         }
                     };
                 }
                 else
                 {
-                    using (MOBILESHOPEntities dbcontex = new MOBILESHOPEntities())
-                    {
-                        mb_model_detail mbModel = new mb_model_detail()
-                        {
-
-                            model_name = dto.modelName,
-                            model_brand_key = dto.Brand
-                        };
-                        dbcontex.mb_model_detail.Add(mbModel);
-                        dbcontex.SaveChanges();
-                        return Json(new { key = true, value = "model added successfully" }, JsonRequestBehavior.AllowGet);
-                    };
+                    return Json(new { key = false, value = "Please enter correct data" }, JsonRequestBehavior.AllowGet);
                 }
+
             }
             catch (Exception)
             {
 
-                return Json(new { key = true, value = "Unable to save the model" }, JsonRequestBehavior.AllowGet);
+                return Json(new { key = false, value = "Unable to save the Model" }, JsonRequestBehavior.AllowGet);
             }
 
         }
+
         public ActionResult UpdateModel(int id)
         {
             ModelDTO dt = new ModelDTO();
