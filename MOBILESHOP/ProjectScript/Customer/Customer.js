@@ -95,10 +95,12 @@
         }
 
     };
+
     var handlePrintBill = function (devicekey) {
         var url = "/Customer/PrintBill?id=" + devicekey;
         window.location.href = url;
     };
+
     var handleCustomerList = function () {
         $.ajax({
             url: '/Customer/CustomerListing',
@@ -115,6 +117,7 @@
         });
 
     };
+
     var handleDeleteCustomer = function (id) {
 
         $.confirm({
@@ -162,6 +165,7 @@
             }
         });
     };
+
     var handleSignatureModel = function () {
         $("#CustomerSignature").empty();
         var htmldiv = "<div id='signatureCustomer'><div id='signature'></div></div>";
@@ -187,6 +191,7 @@
         });
 
     };
+
     var handleReceiverSignatureModel = function () {
         $("#receiverSignature").empty();
         var htmldiv = "<div id='signatureReceiver'><div id='receivedSignature'></div></div>";
@@ -233,6 +238,7 @@
         $("#ReceiverSignatureImg").attr("src", rawdata);
         $("#receiverModel").modal("hide");
     };
+
     var handleSaveServices = function (deviceKey) {
         var services = [];
         $("#destination").find("option").each(function () {
@@ -298,6 +304,39 @@
     };
 
 
+    var handleModelDropdown = function (id) {
+        if (id != "" && id != undefined && id != null)
+        {
+            $.ajax({
+                url: '/Customer/GetModels',
+                type: 'GET',
+                dataType: 'json',
+                data: { "brandkey": id },
+                success: function (result) {
+                    if (result.key) {
+                        debugger
+                        $("#model").empty();
+                        var options = '<option value="">--Select Model--</option>';
+                        for (var i = 0; i < result.value.length; ++i) {
+                            options = options + "<option value='" + result.value[i].id + "'>" + result.value[i].modelName + "</option>";
+                        }
+                        $("#model").html(options);
+                    }
+                },
+                error: function () {
+                    console.log("Error");
+                }
+            });
+        }
+        else
+        {
+            $("#model").empty();
+            var options = '<option value="">--Select Model--</option>';
+            $("#model").html(options);
+        }
+       
+    };
+
     //public Static
     return {
 
@@ -318,6 +357,9 @@
         },
         initCameraSnap: function () {
             handleCameraSnap();
+        },
+        initModelDropdown: function (id) {
+            handleModelDropdown(id);
         },
         initCameraClose: function () {
             handleCameraClose();
@@ -342,7 +384,9 @@
         },
         initDeleteImage: function (id) {
             handleDeleteImage(id);
-        }
+        },
+
+
     };
 
 

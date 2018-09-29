@@ -8,6 +8,8 @@
 <script src="~/Scripts/jSignature.CompressorSVG.js"></script>
 <script src="~/Scripts/jSignature.UndoButton.js"></script>
 <script src="~/Scripts/jSignature.SignHere.js"></script>
+<script src="~/assets/webcam.js"></script>
+<script src="~/ProjectScript/Customer/Customer.js"></script>
 @{
     ViewBag.Title = "Customer Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -343,8 +345,7 @@
     </div>
 </div>
 
-<script src="~/assets/webcam.js"></script>
-<script src="~/ProjectScript/Customer/Customer.js"></script>
+
 <script type="text/javascript">
     $(function () {
         //$('.select2').select2({
@@ -368,7 +369,7 @@
         }
     });
     $("#deviceDelivered").change(function () {
-        debugger
+
         if (parseInt($(this).val()) == 0) {
             $("#deliveryDiv").addClass('hide');
         }
@@ -376,6 +377,12 @@
             $("#deliveryDiv").removeClass('hide');
         }
     });
+
+    $("#Brand").change(function () {
+        var key = $(this).val();
+        Customer.initModelDropdown(key);
+    });
+
 </script>
 
 

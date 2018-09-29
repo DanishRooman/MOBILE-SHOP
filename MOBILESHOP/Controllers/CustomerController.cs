@@ -190,11 +190,11 @@ namespace MOBILESHOP.Controllers
                     id = x.brand_key,
                     BrandName = x.brand_name
                 }).ToList();
-                dt.modelList = dbcontext.mb_model_detail.AsEnumerable().Select(x => new ModelDTO
-                {
-                    id = x.model_key,
-                    modelName = x.model_name
-                }).ToList();
+                dt.modelList = new List<ModelDTO>();//dt.modelList = dbcontext.mb_model_detail.AsEnumerable().Select(x => new ModelDTO
+                //{
+                //    id = x.model_key,
+                //    modelName = x.model_name
+                //}).ToList();
                 dt.faultList = dbcontext.mb_fault_detail.AsEnumerable().Select(x => new DataTransferObject.Fault.FaultDTO
                 {
                     id = x.fault_key,
@@ -219,7 +219,7 @@ namespace MOBILESHOP.Controllers
                 DateTime submitDate = DateTime.ParseExact(dto.datetime, "MM/dd/yyyy h:mm tt", null);
                 DateTime deliverDate = DateTime.ParseExact(dto.datetime, "MM/dd/yyyy h:mm tt", null);
                 DateTime? receiveDate = null;
-                if(dto.receivedDate != null && dto.receivedDate !=  "")
+                if (dto.receivedDate != null && dto.receivedDate != "")
                 {
                     receiveDate = (DateTime.ParseExact(dto.receivedDate, "MM/dd/yyyy h:mm tt", null));
                 }
@@ -428,7 +428,7 @@ namespace MOBILESHOP.Controllers
                     deliverDate = Convert.ToDateTime(row.device_deliver_date).ToString("MM/dd/yyyy h:mm tt"),
                     repairingCost = row.device_repairing_cost,
                     receivedSignature = row.device_receiver_signature != null ? row.device_receiver_signature : "/images/300px-No_image_available.svg (1).png",
-                    receivedDate = row.device_receiving_date !=null ? Convert.ToDateTime(row.device_receiving_date).ToString("MM/dd/yyyy h:mm tt"): DateTime.Now.ToString("MM/dd/yyyy h:mm tt"),
+                    receivedDate = row.device_receiving_date != null ? Convert.ToDateTime(row.device_receiving_date).ToString("MM/dd/yyyy h:mm tt") : DateTime.Now.ToString("MM/dd/yyyy h:mm tt"),
                     receivedName = row.device_receiver_name,
                     deviceDelivered = row.device_is_delivered == true ? 1 : 0
                 };
@@ -437,11 +437,11 @@ namespace MOBILESHOP.Controllers
                     id = x.brand_key,
                     BrandName = x.brand_name
                 }).ToList();
-                dto.modelList = dbcontext.mb_model_detail.AsEnumerable().Select(x => new ModelDTO
-                {
-                    id = x.model_key,
-                    modelName = x.model_name
-                }).ToList();
+               dto.modelList =  dbcontext.mb_model_detail.AsEnumerable().Select(x => new ModelDTO
+               {
+                   id = x.model_key,
+                   modelName = x.model_name
+               }).ToList();
                 dto.faultList = dbcontext.mb_fault_detail.AsEnumerable().Select(x => new DataTransferObject.Fault.FaultDTO
                 {
                     id = x.fault_key,
@@ -463,7 +463,7 @@ namespace MOBILESHOP.Controllers
                     serviceCharges = x.service_charges,
                 }).ToList();
 
-                ViewBag.selected_servicesList = dbcontext.Costumer_Device_Services.Where(x=>x.cds_device_key == id).AsEnumerable().Select(x => new DataTransferObject.Services.ServiceDTO
+                ViewBag.selected_servicesList = dbcontext.Costumer_Device_Services.Where(x => x.cds_device_key == id).AsEnumerable().Select(x => new DataTransferObject.Services.ServiceDTO
                 {
                     id = x.mbshop_service_detail.service_key,
                     serviceName = x.mbshop_service_detail.service_name,
@@ -614,6 +614,26 @@ namespace MOBILESHOP.Controllers
                 return Json(new { key = false, value = "Unable to process your request please contact to your admin." }, JsonRequestBehavior.AllowGet);
             }
 
+        }
+
+        public ActionResult GetModels(int brandkey)
+        {
+            try
+            {
+                using (MOBILESHOPEntities dbcontext = new MOBILESHOPEntities())
+                {
+                    var list = dbcontext.mb_model_detail.Where(x => x.model_brand_key == brandkey).AsEnumerable().Select(x => new ModelDTO
+                    {
+                        modelName = x.model_name,
+                        id = x.model_key
+                    }).ToList();
+                    return Json(new { key = true, value = list }, JsonRequestBehavior.AllowGet);
+                };
+            }
+            catch (Exception ex)
+            {
+                return Json(new { key = false, value = "" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
 

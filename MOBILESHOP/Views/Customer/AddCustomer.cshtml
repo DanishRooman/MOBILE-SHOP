@@ -8,6 +8,8 @@
 <script src="~/Scripts/jSignature.CompressorSVG.js"></script>
 <script src="~/Scripts/jSignature.UndoButton.js"></script>
 <script src="~/Scripts/jSignature.SignHere.js"></script>
+<script src="~/assets/webcam.js"></script>
+<script src="~/ProjectScript/Customer/Customer.js"></script>
 @{
     ViewBag.Title = "Customer Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -245,12 +247,11 @@
 </div>
 
 
-<script src="~/assets/webcam.js"></script>
-<script src="~/ProjectScript/Customer/Customer.js"></script>
+
 <script type="text/javascript">
     $(function () {
         $(".datepicker").datetimepicker();
-     
+
         //multiList
         $('#source, #destination').listswap({
             truncate: true,
@@ -261,6 +262,12 @@
             add_class: null,
             rtl: false
         });
+
+        $("#Brand").change(function () {
+            var key = $(this).val();
+            Customer.initModelDropdown(key);
+        });
+
 
     });
 </script>
