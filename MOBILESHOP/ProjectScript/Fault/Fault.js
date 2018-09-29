@@ -58,6 +58,7 @@
     };
     var handleEmptyFault = function () {
         $('.form-control').val("");
+        $("#CreateFault").modal("hide");
     };
     var handleDeleteFault = function (id) {
         $.confirm({

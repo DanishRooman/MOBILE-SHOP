@@ -156,7 +156,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <select id="source"
-                        data-text="Survices Available"
+                        data-text="Services Available"
                         data-search="Search for Services">
                     @foreach (var item in (List<DataTransferObject.Services.ServiceDTO>)ViewBag.servicesList)
                     {
@@ -249,7 +249,8 @@
 <script src="~/ProjectScript/Customer/Customer.js"></script>
 <script type="text/javascript">
     $(function () {
-        $('.datepicker ').datetimepicker();
+        $(".datepicker").datetimepicker();
+     
         //multiList
         $('#source, #destination').listswap({
             truncate: true,

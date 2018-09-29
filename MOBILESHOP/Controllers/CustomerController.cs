@@ -428,7 +428,7 @@ namespace MOBILESHOP.Controllers
                     deliverDate = Convert.ToDateTime(row.device_deliver_date).ToString("MM/dd/yyyy h:mm tt"),
                     repairingCost = row.device_repairing_cost,
                     receivedSignature = row.device_receiver_signature != null ? row.device_receiver_signature : "/images/300px-No_image_available.svg (1).png",
-                    receivedDate = Convert.ToDateTime(row.device_receiving_date).ToString("MM/dd/yyyy h:mm tt"),
+                    receivedDate = row.device_receiving_date !=null ? Convert.ToDateTime(row.device_receiving_date).ToString("MM/dd/yyyy h:mm tt"): DateTime.Now.ToString("MM/dd/yyyy h:mm tt"),
                     receivedName = row.device_receiver_name,
                     deviceDelivered = row.device_is_delivered == true ? 1 : 0
                 };
@@ -463,7 +463,7 @@ namespace MOBILESHOP.Controllers
                     serviceCharges = x.service_charges,
                 }).ToList();
 
-                ViewBag.selected_servicesList = dbcontext.Costumer_Device_Services.AsEnumerable().Select(x => new DataTransferObject.Services.ServiceDTO
+                ViewBag.selected_servicesList = dbcontext.Costumer_Device_Services.Where(x=>x.cds_device_key == id).AsEnumerable().Select(x => new DataTransferObject.Services.ServiceDTO
                 {
                     id = x.mbshop_service_detail.service_key,
                     serviceName = x.mbshop_service_detail.service_name,

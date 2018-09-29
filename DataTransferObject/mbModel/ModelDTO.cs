@@ -15,6 +15,8 @@ namespace DataTransferObject.mbModel
         [Required]
         [Display(Name ="Model")]
         public string modelName { get; set; }
+        [Display(Name ="Brand")]
+        public string BrandName { get; set; }
 
 
         [Display(Name ="Brand")]

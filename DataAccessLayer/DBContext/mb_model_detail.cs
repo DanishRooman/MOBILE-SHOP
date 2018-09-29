@@ -27,5 +27,10 @@ namespace DataAccessLayer.DBContext
         public virtual mb_brand_detail mb_brand_detail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<mbshop_device_detail> mbshop_device_detail { get; set; }
+
+        public static implicit operator int(mb_model_detail v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
